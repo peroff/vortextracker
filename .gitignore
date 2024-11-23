@@ -12,3 +12,5 @@ FastMM*
 *.dcu
 gpprof*
 *.~*
+buildname.txt
+buildts.inc
