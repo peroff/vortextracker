@@ -13,7 +13,7 @@ program VT;
 
 uses
   //FastMM4,
-  ExceptionLog,
+  //ExceptionLog,
   Forms,
   Dialogs,
   Windows,

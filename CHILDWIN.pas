@@ -20,7 +20,7 @@ uses
   Windows, Messages, Types, Classes, Graphics, Forms, Controls, StdCtrls, Menus,
   SysUtils, trfuncs, ComCtrls, WaveOutAPI, Grids, AY, Buttons, ExtCtrls, Dialogs,
   Math, ColorThemes, ExportWavOpts, StrUtils, RegExpr, RichEdit, ShellApi,
-  ExceptionLog, dpMemBmp, VKeys, ShlObj, HotKeys;
+  {ExceptionLog,} dpMemBmp, VKeys, ShlObj, HotKeys;
 
 
 const
@@ -622,7 +622,6 @@ type
     FBSaveInstrument: TMenuItem;
     N1: TMenuItem;
     Label4: TLabel;
-    EurekaLog1: TEurekaLog;
     Panel1: TPanel;
     Panel2: TPanel;
     Panel3: TPanel;
