@@ -14,3 +14,4 @@ gpprof*
 *.~*
 buildname.txt
 buildts.inc
+*.ddp
