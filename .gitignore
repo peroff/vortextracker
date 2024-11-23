@@ -11,7 +11,19 @@ FastMM*
 *.orig
 *.dcu
 gpprof*
-*.~*
 buildname.txt
 buildts.inc
 *.ddp
+
+# Delphi local files (user-specific info)
+*.local
+*.identcache
+*.projdata
+*.tvsconfig
+*.dsk
+
+# Delphi history and backups
+__history/
+__recovery/
+*.~*
+*.2007
