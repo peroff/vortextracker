@@ -1,4 +1,4 @@
-unit regexpr;
+﻿unit regexpr;
 
 {
   TRegExpr class library
@@ -944,10 +944,8 @@ function RegExprSubExpressions(const ARegExpr: RegExprString; ASubExprs: TString
 
 implementation
 
-{$IFDEF FastUnicodeData}
 uses
-  regexpr_unicodedata;
-{$ENDIF}
+  {$IFDEF FastUnicodeData}regexpr_unicodedata,{$ENDIF} Windows;
 
 const
   // TRegExpr.VersionMajor/Minor return values of these constants:
@@ -6804,9 +6802,12 @@ begin
     try
       Result := ExecPrimProtected(AOffset, ASlowChecks, ABackward, ATryMatchOnlyStartingBefore);
     except
-      on E: EStackOverflow do begin
+      on E: EExternal do begin
         Result := False;
-        fLastError := reeLoopStackExceeded;
+        if E.ExceptionRecord.ExceptionCode = STATUS_STACK_OVERFLOW then
+          fLastError := reeLoopStackExceeded
+        else
+          fLastError := reeUnknown;
       end;
       on E: ERegExpr do begin
         Result := False;
@@ -8262,6 +8263,7 @@ begin
   FndMaxLen := 0;
   next := prog;
   s := prog;
+  FirstVarLenOp := OP_NONE;
 
   repeat
     NextIsNil := next = nil;
