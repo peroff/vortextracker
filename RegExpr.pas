@@ -623,7 +623,7 @@ type
     function GetMatch(Idx: Integer): RegExprString;
 
     procedure SetInputString(const AInputString: RegExprString);
-    procedure SetInputRange(AStart, AEnd, AContinueAnchor: PRegExprChar);
+    // procedure SetInputRange(AStart, AEnd, AContinueAnchor: PRegExprChar);
 
     {$IFDEF UseLineSep}
     procedure SetLineSeparators(const AStr: RegExprString);
@@ -6960,14 +6960,14 @@ begin
   fInputContinue := fInputStart;
 end;
 
-procedure TRegExpr.SetInputRange(AStart, AEnd, AContinueAnchor: PRegExprChar);
+{ procedure TRegExpr.SetInputRange(AStart, AEnd, AContinueAnchor: PRegExprChar);
 begin
   ClearMatches;
   fInputString := '';
   fInputStart := AStart;
   fInputEnd := AEnd;
   fInputContinue := AContinueAnchor;
-end;
+end; }
 
 {$IFDEF UseLineSep}
 procedure TRegExpr.SetLineSeparators(const AStr: RegExprString);
@@ -7506,7 +7506,7 @@ begin
 
       OP_LOOKAHEAD:
         begin
-          opnd := PRegExprChar(AlignToPtr(Next + 1)) + RENextOffSz;
+          // opnd := PRegExprChar(AlignToPtr(Next + 1)) + RENextOffSz;
           Next := regNextQuick(Next);
 
           TempSet := FirstCharSet;
@@ -8369,7 +8369,7 @@ begin
 
       OP_LOOKAHEAD, OP_LOOKAHEAD_NEG:
         begin
-          r := IsPartFixedLength(s, op, ASubLen, ASubMaxLen, OP_LOOKAHEAD_END, MaxStopOrNext(next), [flfSkipLookAround] + Flags * [flfReturnAtNextNil]);
+          {r := }IsPartFixedLength(s, op, ASubLen, ASubMaxLen, OP_LOOKAHEAD_END, MaxStopOrNext(next), [flfSkipLookAround] + Flags * [flfReturnAtNextNil]);
           s := next;
           Inc(s, REOpSz + RENextOffSz); // skip the OP_LOOKAHEAD_END
           if not (flfSkipLookAround in Flags) then
@@ -8382,7 +8382,7 @@ begin
       OP_LOOKBEHIND, OP_LOOKBEHIND_NEG:
         begin
           Inc(s, ReOpLookBehindOptionsSz);
-          r := IsPartFixedLength(s, op, ASubLen, ASubMaxLen, OP_LOOKBEHIND_END, MaxStopOrNext(next), [flfSkipLookAround] + Flags * [flfReturnAtNextNil]);
+          {r := }IsPartFixedLength(s, op, ASubLen, ASubMaxLen, OP_LOOKBEHIND_END, MaxStopOrNext(next), [flfSkipLookAround] + Flags * [flfReturnAtNextNil]);
           s := next;
           Inc(s, REOpSz + RENextOffSz); // skip the OP_LOOKBEHIND_END
           if not (flfSkipLookAround in Flags) then
