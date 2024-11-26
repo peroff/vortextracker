@@ -3032,7 +3032,7 @@ begin
     ErrMsg := VTM2PT3(@PT3, CW.VTMP, Size);
     if ErrMsg<>'' then
     begin
-      Application.MessageBox(PAnsiChar(ErrMsg), PAnsiChar(FileName));
+      Application.MessageBox(PChar(ErrMsg), PChar(FileName));
       exit;
     end;
     AssignFile(f, FileName);
@@ -3045,7 +3045,7 @@ begin
         ErrMsg := VTM2PT3(@PT3, CW.TSWindow[0].VTMP, Size);
         if ErrMsg<>'' then
         begin
-          Application.MessageBox(PAnsiChar(ErrMsg), PAnsiChar(FileName));
+          Application.MessageBox(PChar(ErrMsg), PChar(FileName));
           exit;
         end;
         BlockWrite(f, PT3, Size);
@@ -3053,7 +3053,7 @@ begin
         ErrMsg := VTM2PT3(@PT3, CW.TSWindow[1].VTMP, Size);
         if ErrMsg<>'' then
         begin
-          Application.MessageBox(PAnsiChar(ErrMsg), PAnsiChar(FileName));
+          Application.MessageBox(PChar(ErrMsg), PChar(FileName));
           exit;
         end;
         BlockWrite(f, PT3, Size);
@@ -3067,7 +3067,7 @@ begin
         ErrMsg := VTM2PT3(@PT3, CW.TSWindow[0].VTMP, Size);
         if ErrMsg<>'' then
         begin
-          Application.MessageBox(PAnsiChar(ErrMsg), PAnsiChar(FileName));
+          Application.MessageBox(PChar(ErrMsg), PChar(FileName));
           exit;
         end;
         BlockWrite(f, PT3, Size);
@@ -3129,7 +3129,7 @@ begin
     ErrMsg := VTM2PT3(@PT3, CW.VTMP, Size);
     if ErrMsg<>'' then
     begin
-      Application.MessageBox(PAnsiChar(ErrMsg), PAnsiChar(FileName));
+      Application.MessageBox(PChar(ErrMsg), PChar(FileName));
       exit;
     end;
     AssignFile(f, FileName);
@@ -3142,7 +3142,7 @@ begin
         ErrMsg := VTM2PT3(@PT3, CW.TSWindow[0].VTMP, Size);
         if ErrMsg<>'' then
         begin
-          Application.MessageBox(PAnsiChar(ErrMsg), PAnsiChar(FileName));
+          Application.MessageBox(PChar(ErrMsg), PChar(FileName));
           exit;
         end;
         BlockWrite(f, PT3, Size);
@@ -3150,7 +3150,7 @@ begin
         ErrMsg := VTM2PT3(@PT3, CW.TSWindow[1].VTMP, Size);
         if ErrMsg<>'' then
         begin
-          Application.MessageBox(PAnsiChar(ErrMsg), PAnsiChar(FileName));
+          Application.MessageBox(PChar(ErrMsg), PChar(FileName));
           exit;
         end;
         BlockWrite(f, PT3, Size);
@@ -3164,7 +3164,7 @@ begin
         ErrMsg := VTM2PT3(@PT3, CW.TSWindow[0].VTMP, Size);
         if ErrMsg<>'' then
         begin
-          Application.MessageBox(PAnsiChar(ErrMsg), PAnsiChar(FileName));
+          Application.MessageBox(PChar(ErrMsg), PChar(FileName));
           exit;
         end;
         BlockWrite(f, PT3, Size);
@@ -4665,7 +4665,7 @@ begin
   ErrMsg := VTM2PT3(@PT3, CurrentWindow.VTMP, Size);
   if ErrMsg<>'' then
   begin
-    Application.MessageBox(PAnsiChar(ErrMsg), PAnsiChar(SaveDialogSNDH.FileName));
+    Application.MessageBox(PChar(ErrMsg), PChar(SaveDialogSNDH.FileName));
     exit
   end;
   AssignFile(f, SaveDialogSNDH.FileName);
@@ -4775,7 +4775,7 @@ begin
   ErrMsg:=VTM2PT3(@PT3_1, CurrentWindow.VTMP, ZXModSize1);
   if ErrMsg<>'' then
   begin
-    Application.MessageBox(PAnsiChar(ErrMsg), PAnsiChar(CurrentWindow.Caption));
+    Application.MessageBox(PChar(ErrMsg), PChar(CurrentWindow.Caption));
     exit;
   end;
   ZXModSize2 := 0;
@@ -4784,7 +4784,7 @@ begin
     ErrMsg:=VTM2PT3(@PT3_2, CurrentWindow.TSWindow[0].VTMP, ZXModSize2);
     if ErrMsg<>'' then
     begin
-      Application.MessageBox(PAnsiChar(ErrMsg), PAnsiChar(CurrentWindow.TSWindow[0].Caption));
+      Application.MessageBox(PChar(ErrMsg), PChar(CurrentWindow.TSWindow[0].Caption));
       exit;
     end;
   end;

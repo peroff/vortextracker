@@ -13022,7 +13022,7 @@ var
     end;
 
     if not Result then
-      Application.MessageBox(pansichar('Module loading error'+#13#10+msg), 'Vortex Tracker', MB_OK + MB_ICONSTOP + MB_TOPMOST);
+      Application.MessageBox(PChar('Module loading error'+#13#10+msg), 'Vortex Tracker', MB_OK + MB_ICONSTOP + MB_TOPMOST);
 
   end;
 
