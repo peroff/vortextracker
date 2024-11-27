@@ -46,6 +46,58 @@
 			<DelphiCompile Include="VT.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
+			<DCCReference Include="main.pas">
+				<Form>MainForm</Form>
+			</DCCReference>
+			<DCCReference Include="CHILDWIN.pas">
+				<Form>MDIChild</Form>
+			</DCCReference>
+			<DCCReference Include="about.pas">
+				<Form>AboutBox</Form>
+			</DCCReference>
+			<DCCReference Include="trfuncs.pas"/>
+			<DCCReference Include="AY.pas"/>
+			<DCCReference Include="WaveOutAPI.pas"/>
+			<DCCReference Include="options.pas">
+				<Form>Form1</Form>
+			</DCCReference>
+			<DCCReference Include="TrkMng.pas">
+				<Form>TrMng</Form>
+			</DCCReference>
+			<DCCReference Include="GlbTrn.pas">
+				<Form>GlbTrans</Form>
+			</DCCReference>
+			<DCCReference Include="ExportZX.pas">
+				<Form>ExpDlg</Form>
+			</DCCReference>
+			<DCCReference Include="FXMImport.pas">
+				<Form>FXMParams</Form>
+			</DCCReference>
+			<DCCReference Include="selectts.pas">
+				<Form>TSSel</Form>
+			</DCCReference>
+			<DCCReference Include="TglSams.pas">
+				<Form>ToglSams</Form>
+			</DCCReference>
+			<DCCReference Include="HotKeys.pas"/>
+			<DCCReference Include="ColorThemes.pas"/>
+			<DCCReference Include="ExportWav.pas">
+				<Form>Export</Form>
+			</DCCReference>
+			<DCCReference Include="ExportWavOpts.pas">
+				<Form>ExportOptions</Form>
+			</DCCReference>
+			<DCCReference Include="InstrumentsPack.pas"/>
+			<DCCReference Include="ntfs.pas"/>
+			<DCCReference Include="ayumi.pas"/>
+			<DCCReference Include="UnloopDlg.pas">
+				<Form>UnloopDlg</Form>
+			</DCCReference>
+			<DCCReference Include="TrackInf.pas">
+				<Form>TrackInfoForm</Form>
+			</DCCReference>
+			<DCCReference Include="Logger.pas"/>
+			<DCCReference Include="PatternPacker.pas"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>
