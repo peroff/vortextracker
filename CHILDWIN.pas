@@ -1223,7 +1223,7 @@ var
 implementation
 
 uses
-  Main, options, selectts, TglSams, GlbTrn, TrkMng, ntfs, UnloopDlg, ClipBrd, TrackInf, PatternPacker;
+  Main, options, selectts, TglSams, GlbTrn, TrkMng, ntfs, UnloopDlg, ClipBrd, TrackInf, PatternPacker, Misc;
 
 {$R *.DFM}
 {$J+} { Assignable Typed Constant }
@@ -19019,7 +19019,7 @@ begin
       if (ColOffset <= 0) then begin
         if (AnsiContainsStr(ChanLines[j], 'OFF') or AnsiContainsStr(ChanLines[j], 'REL') or (ChanLines[j][XOffset+0] = '=')) then
           Note := -2
-        else if ChanLines[j][XOffset+0] in ['.', ' '] then
+        else if CharInSet_(ChanLines[j][XOffset+0], ['.', ' ']) then
           Note := -1
         else
           Note := SGetNote2(ChanLines[j][XOffset+0]+ChanLines[j][XOffset+1]+ChanLines[j][XOffset+2]);
@@ -19031,7 +19031,7 @@ begin
       // Sample
       if (ColOffset <= 1) then begin
         if ChanLines[j][XOffset+0] = #0 then Break;
-        if not (ChanLines[j][XOffset+0] in ['.', ' ']) and not (ChanLines[j][XOffset+1] in ['.', ' ']) then begin
+        if not CharInSet_(ChanLines[j][XOffset+0], ['.', ' ']) and not CharInSet_(ChanLines[j][XOffset+1], ['.', ' ']) then begin
           SGetNumber(ChanLines[j][XOffset+0]+ChanLines[j][XOffset+1], 30, num);
           //num := StrToInt(ChanLines[j][XOffset+0]+ChanLines[j][XOffset+1]) and 31;
           ChannelLine.Sample := num + 1;
@@ -19045,7 +19045,7 @@ begin
       // Volume
       if (ColOffset <= 2) then begin
         if ChanLines[j][XOffset+0] = #0 then Break;
-        if not (ChanLines[j][XOffset+0] in ['.', ' ']) and not (ChanLines[j][XOffset+1] in ['.', ' ']) then begin
+        if not CharInSet_(ChanLines[j][XOffset+0], ['.', ' ']) and not CharInSet_(ChanLines[j][XOffset+1], ['.', ' ']) then begin
           SGetNumber(ChanLines[j][XOffset+0]+ChanLines[j][XOffset+1], 255, num);
           ChannelLine.Ornament := num div 16;
           ChannelLine.Volume   := num mod 16;
@@ -19072,7 +19072,7 @@ begin
 
         // then parse everything left
         if (ChanLines[j][XOffset+0] <> #0) then repeat
-          if (not (ChanLines[j][XOffset+0] in ['.', ' '])) then case (StrToInt('$'+ChanLines[j][XOffset+0]+ChanLines[j][XOffset+1])) of
+          if (not CharInSet_(ChanLines[j][XOffset+0], ['.', ' '])) then case (StrToInt('$'+ChanLines[j][XOffset+0]+ChanLines[j][XOffset+1])) of
             // Tone Slide Up
             1: ChannelLine.Additional_Command.Number := 2;
             // Tone Slide Down
@@ -19086,7 +19086,7 @@ begin
           XOffset := XOffset + 2;
 
           if (ChanLines[j][XOffset+0] = #0) then break;
-          if ((ChannelLine.Additional_Command.Number <> 0) and (not (ChanLines[j][XOffset+0] in ['.', ' ']))) then begin
+          if ((ChannelLine.Additional_Command.Number <> 0) and (not CharInSet_(ChanLines[j][XOffset+0], ['.', ' ']))) then begin
             ChannelLine.Additional_Command.Parameter := StrToInt('$'+ChanLines[j][XOffset+0]+ChanLines[j][XOffset+1]);
           end;
           XOffset := XOffset + 2;
@@ -19166,7 +19166,7 @@ begin
 
       // Note
       if ChanLines[j][1] = #0 then Break;
-      if ChanLines[j][1] in ['.', ' '] then
+      if CharInSet_(ChanLines[j][1], ['.', ' ']) then
         Note := -1
       else if ChanLines[j][1] = '^' then
         Note := -2
@@ -19176,7 +19176,7 @@ begin
 
       // Sample
       if ChanLines[j][4] = #0 then Break;
-      if not (ChanLines[j][4] in ['.', ' ']) and not (ChanLines[j][5] in ['.', ' ']) then begin
+      if not CharInSet_(ChanLines[j][4], ['.', ' ']) and not CharInSet_(ChanLines[j][5], ['.', ' ']) then begin
         num := StrToInt(ChanLines[j][4]+ChanLines[j][5]) and 31;
         ChannelLine.Sample := num;
       end
@@ -19185,7 +19185,7 @@ begin
 
       // Volume
       if ChanLines[j][7] = #0 then Break;
-      if not (ChanLines[j][7] in ['.', ' ']) and not (ChanLines[j][8] in ['.', ' ']) then begin
+      if not CharInSet_(ChanLines[j][7], ['.', ' ']) and not CharInSet_(ChanLines[j][8], ['.', ' ']) then begin
         num := StrToInt(ChanLines[j][7]+ChanLines[j][8]);
         ChannelLine.Volume := $F * num div 64;
       end
@@ -19194,7 +19194,7 @@ begin
 
       // Command
       if ChanLines[j][9] = #0 then Break;
-      if not (ChanLines[j][9] in ['.', ' ']) and not (ChanLines[j][10] in ['.', ' ']) and not (ChanLines[j][11] in ['.', ' ']) then begin
+      if not CharInSet_(ChanLines[j][9], ['.', ' ']) and not CharInSet_(ChanLines[j][10], ['.', ' ']) and not CharInSet_(ChanLines[j][11], ['.', ' ']) then begin
 
         if (ModType = 'MOD') or (ModType = 'XM') then
           case ChanLines[j][9] of
@@ -22979,7 +22979,7 @@ end;
 
 procedure TMDIChild.ManualHzKeyPress(Sender: TObject; var Key: Char);
 begin
-  if not (Key in ['0'..'9']) and (Key <> #8) then begin
+  if not CharInSet_(Key, ['0'..'9']) and (Key <> #8) then begin
     Key := #0;
     Exit;
   end;
@@ -23006,9 +23006,9 @@ end;
 procedure TMDIChild.ManualIntFreqKeyPress(Sender: TObject; var Key: Char);
 var Wrong: Boolean;
 begin
-  Wrong := not (Key in ['0'..'9','.',',']) and (Key <> #8);
-  Wrong := Wrong or ( AnsiContainsText(ManualIntFreq.Text, ',') and (Key in ['.', ',']) );
-  Wrong := Wrong or ( (ManualIntFreq.Text = '') and (Key in ['.', ',']) );
+  Wrong := not CharInSet_(Key, ['0'..'9','.',',']) and (Key <> #8);
+  Wrong := Wrong or ( AnsiContainsText(ManualIntFreq.Text, ',') and CharInSet_(Key, ['.', ',']) );
+  Wrong := Wrong or ( (ManualIntFreq.Text = '') and CharInSet_(Key, ['.', ',']) );
 
   if Wrong then begin
     Key := #0;

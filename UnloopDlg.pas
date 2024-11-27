@@ -36,9 +36,12 @@ implementation
 
 {$R *.dfm}
 
+uses
+  Misc;
+
 procedure TUnloopDlg.UnloopCountKeyPress(Sender: TObject; var Key: Char);
 begin
-  if Key in ['0'..'9'] then Exit;
+  if CharInSet_(Key, ['0'..'9']) then Exit;
   Key := #0;
 end;
 

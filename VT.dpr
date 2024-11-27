@@ -40,7 +40,8 @@ uses
   UnloopDlg in 'UnloopDlg.pas' {UnloopDlg},
   TrackInf in 'TrackInf.pas' {TrackInfoForm},
   Logger in 'Logger.pas',
-  PatternPacker in 'PatternPacker.pas';
+  PatternPacker in 'PatternPacker.pas',
+  Misc in 'Misc.pas';
 
 {$R *.RES}
 {$R SNDH\SNDH.RES}

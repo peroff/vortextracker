@@ -611,7 +611,7 @@ var
 
 implementation
 
-uses AY, WaveOutAPI, FXMImport, Main, RegExpr, Classes, StrUtils;
+uses AY, WaveOutAPI, FXMImport, Main, RegExpr, Classes, StrUtils, Misc;
 
 var
   VTM: PModule;
@@ -1208,7 +1208,7 @@ begin
   i := 1;
   sl := Length(orst);
   repeat
-    while (i <= sl) and not (orst[i] in ['0'..'9', '-', '+', 'L']) do Inc(i);
+    while (i <= sl) and not CharInSet_(orst[i], ['0'..'9', '-', '+', 'L']) do Inc(i);
     if i <= sl then
       if orst[i] = 'L' then
       begin
@@ -1220,7 +1220,7 @@ begin
         j := i;
         repeat
           Inc(i)
-        until (i > sl) or not (orst[i] in ['0'..'9']);
+        until (i > sl) or not CharInSet_(orst[i], ['0'..'9']);
         try
           Orn.Items[l] := StrToInt(Copy(orst, j, i - j))
         except
@@ -1299,16 +1299,16 @@ var
   function GetNum: boolean;
   begin
     Result := False;
-    while (pos <= Length(str)) and not (str[pos] in ['+', '-', '0'..'9', 'A'..'F', 'a'..'f']) do Inc(pos);
+    while (pos <= Length(str)) and not CharInSet_(str[pos], ['+', '-', '0'..'9', 'A'..'F', 'a'..'f']) do Inc(pos);
     if pos > Length(str) then exit;
     sign := 1;
-    if str[pos] in ['+', '-'] then
+    if CharInSet_(str[pos], ['+', '-']) then
     begin
       if str[pos] = '-' then sign := -1;
       Inc(pos)
     end;
     num := 0;
-    while (pos <= Length(str)) and (str[pos] in ['0'..'9', 'A'..'F', 'a'..'f']) do
+    while (pos <= Length(str)) and CharInSet_(str[pos], ['0'..'9', 'A'..'F', 'a'..'f']) do
     begin
       if DecNoise and (pos = 11) then
       begin
@@ -1316,7 +1316,7 @@ var
         Inc(pos);
       end
       else
-      if str[pos] in ['0'..'9'] then
+      if CharInSet_(str[pos], ['0'..'9']) then
         num := num * 16 + Ord(str[pos]) - Ord('0')
       else
         num := num * 16 + (Ord(str[pos]) or $20) - Ord('a') + 10;
@@ -1334,21 +1334,21 @@ var
     Result := True;
     pos := 1;
     Sam.Items[len] := EmptySampleTick;
-    while (pos <= Length(str)) and not (str[pos] in ['t', 'T', '.']) do Inc(pos);
+    while (pos <= Length(str)) and not CharInSet_(str[pos], ['t', 'T', '.']) do Inc(pos);
     if pos > Length(str) then exit;
     Sam.Items[len].Mixer_Ton := str[pos] = 'T';
     Inc(pos);
-    while (pos <= Length(str)) and not (str[pos] in ['n', 'N', '.']) do Inc(pos);
+    while (pos <= Length(str)) and not CharInSet_(str[pos], ['n', 'N', '.']) do Inc(pos);
     if pos > Length(str) then exit;
     Sam.Items[len].Mixer_Noise := str[pos] = 'N';
     Inc(pos);
-    while (pos <= Length(str)) and not (str[pos] in ['e', 'E', '.']) do Inc(pos);
+    while (pos <= Length(str)) and not CharInSet_(str[pos], ['e', 'E', '.']) do Inc(pos);
     if pos > Length(str) then exit;
     Sam.Items[len].Envelope_Enabled := str[pos] = 'E';
     Inc(pos);
     if not GetNum then exit;
     Sam.Items[len].Add_to_Ton := num;
-    while (pos <= Length(str)) and not (str[pos] in ['_', '^']) do Inc(pos);
+    while (pos <= Length(str)) and not CharInSet_(str[pos], ['_', '^']) do Inc(pos);
     if pos > Length(str) then exit;
     Sam.Items[len].Ton_Accumulation := str[pos] = '^';
     Inc(pos);
@@ -1357,21 +1357,21 @@ var
     if Sam.Items[len].Add_to_Envelope_or_Noise and $10 <> 0 then
       Sam.Items[len].Add_to_Envelope_or_Noise :=
         Sam.Items[len].Add_to_Envelope_or_Noise or shortint($F0);
-    while (pos <= Length(str)) and not (str[pos] in ['_', '^']) do Inc(pos);
+    while (pos <= Length(str)) and not CharInSet_(str[pos], ['_', '^']) do Inc(pos);
     if pos > Length(str) then exit;
     Sam.Items[len].Envelope_or_Noise_Accumulation := str[pos] = '^';
     Inc(pos);
     if not GetNum then exit;
     Sam.Items[len].Amplitude := num and 15;
-    while (pos <= Length(str)) and not (str[pos] in ['_', '+', '-']) do Inc(pos);
+    while (pos <= Length(str)) and not CharInSet_(str[pos], ['_', '+', '-']) do Inc(pos);
     if pos > Length(str) then exit;
-    if str[pos] in ['+', '-'] then
+    if CharInSet_(str[pos], ['+', '-']) then
     begin
       Sam.Items[len].Amplitude_Sliding := True;
       Sam.Items[len].Amplitude_Slide_Up := str[pos] = '+'
     end;
     Inc(pos);
-    while (pos <= Length(str)) and not (str[pos] in ['l', 'L']) do Inc(pos);
+    while (pos <= Length(str)) and not CharInSet_(str[pos], ['l', 'L']) do Inc(pos);
     if pos > Length(str) then exit;
     lp := len
   end;
@@ -2319,7 +2319,7 @@ begin
     VTM1.Patterns[i] := nil;
 
   VTM2 := nil; TS := Byte(PT3.PT3_Name[98]);
-  if ((TS <> $20) and (PT3.PT3_Name[13] in ['7'..'9'])) or FoundPT36TS then
+  if ((TS <> $20) and CharInSet_(PT3.PT3_Name[13], ['7'..'9'])) or FoundPT36TS then
   begin
     New(VTM2);
     VTM2^ := VTM1^;
@@ -5662,7 +5662,7 @@ var
   Pats: array[0..MaxPatNum] of TPatPtrs;
 begin
   Result := True;
-  PSC1_00 := PSC.PSC_MusicName[8] in ['0'..'3'];
+  PSC1_00 := CharInSet_(PSC.PSC_MusicName[8], ['0'..'3']);
   SetLength(VTM.Title, 20);
   Move(PSC.PSC_MusicName[$19], VTM.Title[1], 20);
   VTM.Title := TrimRight(VTM.Title);

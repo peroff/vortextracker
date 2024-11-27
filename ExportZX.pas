@@ -80,6 +80,9 @@ implementation
 
 {$R *.DFM}
 
+uses
+  Misc;
+
 procedure TExpDlg.Edit2Change(Sender: TObject);
 var
   i, j: integer;
@@ -107,8 +110,8 @@ begin
     while j < Length(s) do
     begin
       Inc(j);
-      if not (s[j] in ['0'..'9', 'A'..'F']) then exit;
-      if s[j] in ['0'..'9'] then
+      if not CharInSet_(s[j], ['0'..'9', 'A'..'F']) then exit;
+      if CharInSet_(s[j], ['0'..'9']) then
         i := i * 16 + Ord(s[j]) - Ord('0')
       else
         i := i * 16 + Ord(s[j]) - Ord('A') + 10

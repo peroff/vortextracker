@@ -98,6 +98,7 @@
 			</DCCReference>
 			<DCCReference Include="Logger.pas"/>
 			<DCCReference Include="PatternPacker.pas"/>
+			<DCCReference Include="Misc.pas"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>

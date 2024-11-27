@@ -430,7 +430,7 @@ var
 
 implementation
 
-uses AY, WaveOutAPI, Main, MMSystem, CHILDWIN, CommCtrl;
+uses AY, WaveOutAPI, Main, MMSystem, CHILDWIN, CommCtrl, Misc;
 
 {$R *.DFM}
 
@@ -1787,9 +1787,9 @@ end;
 procedure TForm1.EdIntFrqKeyPress(Sender: TObject; var Key: Char);
 var Wrong: Boolean;
 begin
-  Wrong := not (Key in ['0'..'9','.',',']) and (Key <> #8);
-  Wrong := Wrong or ( AnsiContainsText(EdIntFrq.Text, ',') and (Key in ['.', ',']) );
-  Wrong := Wrong or ( (EdIntFrq.Text = '') and (Key in ['.', ',']) );
+  Wrong := not CharInSet_(Key, ['0'..'9','.',',']) and (Key <> #8);
+  Wrong := Wrong or ( AnsiContainsText(EdIntFrq.Text, ',') and CharInSet_(Key, ['.', ',']) );
+  Wrong := Wrong or ( (EdIntFrq.Text = '') and CharInSet_(Key, ['.', ',']) );
 
   if Wrong then begin
     Key := #0;
@@ -1818,7 +1818,7 @@ end;
 
 procedure TForm1.EdChipFrqKeyPress(Sender: TObject; var Key: Char);
 begin
-  if not (Key in ['0'..'9']) and (Key <> #8) then begin
+  if not CharInSet_(Key, ['0'..'9']) and (Key <> #8) then begin
     Key := #0;
     Exit;
   end;
