@@ -14,7 +14,7 @@ uses Classes, SysUtils, inifiles, Dialogs, Controls, Graphics, HotKeys, Windows;
 
 type
   PRGBColor = ^TRGBColor;
-  TRGBColor = string[7];
+  TRGBColor = string;
 
   TColorTheme = record
     Name: String;
@@ -1293,7 +1293,7 @@ var
 
 implementation
 
-uses main, options;
+uses main, options, Misc;
 
 function GetColor(Color: TRGBColor): TColor;
 var bgr: string;
@@ -1915,7 +1915,7 @@ begin
   SetLength(Result, Length(VTColorThemes));
   for i := Low(VTColorThemes) to High(VTColorThemes) do
     begin
-      s := VTColorThemes[i].Name + Chr(180);
+      s := VTColorThemes[i].Name + AnsiChr(180);
       s := s + VTColorThemes[i].Background + ',';
       s := s + VTColorThemes[i].SelLineBackground + ',';
       s := s + VTColorThemes[i].HighlBackground + ',';
@@ -1964,7 +1964,7 @@ begin
 
   if Trim(Str) = '' then Exit;
   try
-    Part  := Split(Chr(180), Str);
+    Part  := Split(AnsiChr(180), Str);
     if Part.Count <> 2 then Exit;
     Color := Split(',', Part[1]);
     if Color.Count <> 36 then Exit;
