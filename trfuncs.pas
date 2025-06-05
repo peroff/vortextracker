@@ -2943,7 +2943,7 @@ begin
   Result := 'Cannot compile module due to 65536 size limit for PT3-modules. You can save it as text still.';
 
   Move(Pt3Id[VTM.VortexModule_Header and (VTM.FeaturesLevel = 1), 0], PT3.PT3_Name, 30);
-  if VTM.FeaturesLevel <> 1 then PT3.PT3_Name[13] := Char($35 + VTM.FeaturesLevel);
+  if VTM.FeaturesLevel <> 1 then PT3.PT3_Name[13] := AnsiChar($35 + VTM.FeaturesLevel);
 
   i := 32; if i > Length(VTM.Title) then i := Length(VTM.Title);
   Move(VTM.Title[1], PT3.PT3_Name[30], i);
@@ -3063,35 +3063,35 @@ begin
                   Sam1 := False;
                   Orn1 := False;
                   PatStrs[StrNum] := PatStrs[StrNum] +
-                    char($F0 + OrnNum) +
-                    char(VTM.Patterns[i].Items[j].Channel[k].Sample * 2)
+                    AnsiChar($F0 + OrnNum) +
+                    AnsiChar(VTM.Patterns[i].Items[j].Channel[k].Sample * 2)
                 end
               end
               else
               begin
                 Sam1 := False;
                 Orn1 := False;
-                PatStrs[StrNum] := PatStrs[StrNum] + char($10 +
+                PatStrs[StrNum] := PatStrs[StrNum] + AnsiChar($10 +
                   VTM.Patterns[i].Items[j].Channel[k].Envelope) +
-                  char(Hi(VTM.Patterns[i].Items[j].Envelope)) +
-                  char(VTM.Patterns[i].Items[j].Envelope) +
-                  char(VTM.Patterns[i].Items[j].Channel[k].Sample * 2);
+                  AnsiChar(Hi(VTM.Patterns[i].Items[j].Envelope)) +
+                  AnsiChar(VTM.Patterns[i].Items[j].Envelope) +
+                  AnsiChar(VTM.Patterns[i].Items[j].Channel[k].Sample * 2);
                 PatStrs[StrNum] := PatStrs[StrNum] +
-                  char($40 + OrnNum)
+                  AnsiChar($40 + OrnNum)
               end
             end;
             if Sam1 then
               PatStrs[StrNum] := PatStrs[StrNum] +
-                char($D0 + VTM.Patterns[i].Items[j].Channel[k].Sample);
+                AnsiChar($D0 + VTM.Patterns[i].Items[j].Channel[k].Sample);
             if Orn1 then
             begin
               PatStrs[StrNum] := PatStrs[StrNum] +
-                char($40 + OrnNum);
+                AnsiChar($40 + OrnNum);
               if VTM.Patterns[i].Items[j].Channel[k].Envelope in [1..14] then
-                PatStrs[StrNum] := PatStrs[StrNum] + char($B1 +
+                PatStrs[StrNum] := PatStrs[StrNum] + AnsiChar($B1 +
                   VTM.Patterns[i].Items[j].Channel[k].Envelope) +
-                  char(Hi(VTM.Patterns[i].Items[j].Envelope)) +
-                  char(VTM.Patterns[i].Items[j].Envelope)
+                  AnsiChar(Hi(VTM.Patterns[i].Items[j].Envelope)) +
+                  AnsiChar(VTM.Patterns[i].Items[j].Envelope)
               else if (VTM.Patterns[i].Items[j].Channel[k].Envelope = 15) and (Envelope[k] <> 0) then
                 PatStrs[StrNum] := PatStrs[StrNum] + #$B0
             end;
@@ -3099,10 +3099,10 @@ begin
             if not Orn and (VTM.Patterns[i].Items[j].Channel[k].Envelope > 0) then
             begin
               if VTM.Patterns[i].Items[j].Channel[k].Envelope <> 15 then
-                PatStrs[StrNum] := PatStrs[StrNum] + char($B1 +
+                PatStrs[StrNum] := PatStrs[StrNum] + AnsiChar($B1 +
                   VTM.Patterns[i].Items[j].Channel[k].Envelope) +
-                  char(Hi(VTM.Patterns[i].Items[j].Envelope)) +
-                  char(VTM.Patterns[i].Items[j].Envelope)
+                  AnsiChar(Hi(VTM.Patterns[i].Items[j].Envelope)) +
+                  AnsiChar(VTM.Patterns[i].Items[j].Envelope)
               else if Envelope[k] <> 0 then
                 PatStrs[StrNum] := PatStrs[StrNum] + #$B0
             end;
@@ -3116,7 +3116,7 @@ begin
             if VTM.Patterns[i].Items[j].Channel[k].Volume <> 0 then
               if VTM.Patterns[i].Items[j].Channel[k].Volume <> Volume[k] then
               begin
-                PatStrs[StrNum] := PatStrs[StrNum] + char($C0 +
+                PatStrs[StrNum] := PatStrs[StrNum] + AnsiChar($C0 +
                   VTM.Patterns[i].Items[j].Channel[k].Volume);
                 Volume[k] := VTM.Patterns[i].Items[j].Channel[k].Volume
               end;
@@ -3124,7 +3124,7 @@ begin
             if (k = 1) and (VTM.Patterns[i].Items[j].Noise <> PrevNoise) then
             begin
               PrevNoise := VTM.Patterns[i].Items[j].Noise;
-              PatStrs[StrNum] := PatStrs[StrNum] + char($20 +
+              PatStrs[StrNum] := PatStrs[StrNum] + AnsiChar($20 +
                 VTM.Patterns[i].Items[j].Noise)
             end;
 
@@ -3159,7 +3159,7 @@ begin
                   DeltT[k] := Dl
                 end;
               4..6:
-                PatStrs[StrNum] := PatStrs[StrNum] + char(
+                PatStrs[StrNum] := PatStrs[StrNum] + AnsiChar(
                   VTM.Patterns[i].Items[j].Channel[k].Additional_Command.Number - 1);
               9, 10:
                 PatStrs[StrNum] := PatStrs[StrNum] + #8;
@@ -3218,7 +3218,7 @@ begin
               VTM.Patterns[i].Items[j].Noise));
             if Skip[k] <> SkipPrev[k] then
             begin
-              PatStrs[StrNum] := PatStrs[StrNum] + #$B1 + char(Skip[k]);
+              PatStrs[StrNum] := PatStrs[StrNum] + #$B1 + AnsiChar(Skip[k]);
               SkipPrev[k] := Skip[k]
             end;
 
@@ -3229,23 +3229,23 @@ begin
             else
             begin
               Note[k] := VTM.Patterns[i].Items[d].Channel[k].Note;
-              PatStrs[StrNum] := PatStrs[StrNum] + char($50 + Note[k])
+              PatStrs[StrNum] := PatStrs[StrNum] + AnsiChar($50 + Note[k])
             end;
 
 
             case VTM.Patterns[i].Items[d].Channel[k].Additional_Command.Number of
               1:
                 begin
-                  PatStrs[StrNum] := PatStrs[StrNum] + char(
+                  PatStrs[StrNum] := PatStrs[StrNum] + AnsiChar(
                     VTM.Patterns[i].Items[d].Channel[k].Additional_Command.Delay) +
-                    char(VTM.Patterns[i].Items[d].Channel[k].Additional_Command.
+                    AnsiChar(VTM.Patterns[i].Items[d].Channel[k].Additional_Command.
                     Parameter) + #0
                 end;
               2:
                 begin
-                  PatStrs[StrNum] := PatStrs[StrNum] + char(
+                  PatStrs[StrNum] := PatStrs[StrNum] + AnsiChar(
                     VTM.Patterns[i].Items[d].Channel[k].Additional_Command.Delay) +
-                    char(-VTM.Patterns[i].Items[d].Channel[k].Additional_Command.
+                    AnsiChar(-VTM.Patterns[i].Items[d].Channel[k].Additional_Command.
                     Parameter) + #$FF
                 end;
               3:
@@ -3254,39 +3254,39 @@ begin
                   (VTM.FeaturesLevel >= 1)) then
                 begin
                   if Dl >= 0 then
-                    PatStrs[StrNum] := PatStrs[StrNum] + char(
+                    PatStrs[StrNum] := PatStrs[StrNum] + AnsiChar(
                       VTM.Patterns[i].Items[d].Channel[k].Additional_Command.Delay) +
-                      char(Dl) + char(Hi(Dl)) + char(VTM.Patterns[i].Items[d].
+                      AnsiChar(Dl) + AnsiChar(Hi(Dl)) + AnsiChar(VTM.Patterns[i].Items[d].
                       Channel[k].Additional_Command.Parameter) + #0
                   else
-                    PatStrs[StrNum] := PatStrs[StrNum] + char(
+                    PatStrs[StrNum] := PatStrs[StrNum] + AnsiChar(
                       VTM.Patterns[i].Items[d].Channel[k].Additional_Command.Delay) +
-                      char(-Dl) + char(Hi(-Dl)) + char(-VTM.Patterns[i].Items[d].
+                      AnsiChar(-Dl) + AnsiChar(Hi(-Dl)) + AnsiChar(-VTM.Patterns[i].Items[d].
                       Channel[k].Additional_Command.Parameter) + #$FF
                 end;
               4, 5:
-                PatStrs[StrNum] := PatStrs[StrNum] + char(
+                PatStrs[StrNum] := PatStrs[StrNum] + AnsiChar(
                   VTM.Patterns[i].Items[d].Channel[k].Additional_Command.Parameter);
               6:
-                PatStrs[StrNum] := PatStrs[StrNum] + char(
+                PatStrs[StrNum] := PatStrs[StrNum] + AnsiChar(
                   VTM.Patterns[i].Items[d].Channel[k].Additional_Command.Parameter
-                  shr 4) + char(
+                  shr 4) + AnsiChar(
                   VTM.Patterns[i].Items[d].Channel[k].Additional_Command.Parameter
                   and 15);
               9:
-                PatStrs[StrNum] := PatStrs[StrNum] + char(
+                PatStrs[StrNum] := PatStrs[StrNum] + AnsiChar(
                   VTM.Patterns[i].Items[d].Channel[k].Additional_Command.Delay) +
-                  char(VTM.Patterns[i].Items[d].Channel[k].
+                  AnsiChar(VTM.Patterns[i].Items[d].Channel[k].
                   Additional_Command.Parameter) + #0;
               10:
-                PatStrs[StrNum] := PatStrs[StrNum] + char(
+                PatStrs[StrNum] := PatStrs[StrNum] + AnsiChar(
                   VTM.Patterns[i].Items[d].Channel[k].Additional_Command.Delay) +
-                  char(-VTM.Patterns[i].Items[d].Channel[k].
+                  AnsiChar(-VTM.Patterns[i].Items[d].Channel[k].
                   Additional_Command.Parameter) + #$FF;
               11:
                 if VTM.Patterns[i].Items[d].Channel[k].
                   Additional_Command.Parameter <> 0 then
-                  PatStrs[StrNum] := PatStrs[StrNum] + char(
+                  PatStrs[StrNum] := PatStrs[StrNum] + AnsiChar(
                     VTM.Patterns[i].Items[d].Channel[k].Additional_Command.Parameter)
             end;
             Dl := DeltT[k]
@@ -3782,9 +3782,9 @@ begin
     if STC.ST_Size <> FSize then
       if (STC.ST_Size and 255) in [32..127] then
       begin
-        VTM.Title := VTM.Title + Char(STC.ST_Size and 255);
+        VTM.Title := VTM.Title + AnsiChar(STC.ST_Size and 255);
         if (STC.ST_Size shr 8) in [32..127] then
-          VTM.Title := VTM.Title + Char(STC.ST_Size shr 8)
+          VTM.Title := VTM.Title + AnsiChar(STC.ST_Size shr 8)
       end;
     VTM.Title := TrimRight(VTM.Title)
   end;

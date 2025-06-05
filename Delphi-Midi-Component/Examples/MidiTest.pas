@@ -185,7 +185,7 @@ end;
 
 procedure TMidiPlayer.edtBpmKeyPress(Sender: TObject; var Key: Char);
 begin
- if Key = char(13) then
+ if Key = #13 then
  begin
    MidiFile1.Bpm := StrToInt(edtBpm.Text);
    edtBpm.text := IntToStr(midifile1.Bpm);
