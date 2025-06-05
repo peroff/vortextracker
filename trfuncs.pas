@@ -2458,7 +2458,7 @@ begin
     Result := Result + '+';
     for j := 1 to 15 do
       if j <= SL.Amplitude then
-        Result := Result + Chr(149)  // 149
+        Result := Result + AnsiChr(149)  // 149
       else
         Result := Result + ' '
   end

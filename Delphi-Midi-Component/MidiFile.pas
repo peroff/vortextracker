@@ -798,14 +798,13 @@ end;
 
 function TMidifile.ReadString(l: integer): string;
 var
-  s: PChar;
+  s: AnsiString;
   i: integer;
 begin
-  GetMem(s, l + 1); ;
-  s[l] := chr(0);
-  for i := 0 to l - 1 do
+  SetLength(s, l);
+  for i := 1 to l do
   begin
-    s[i] := Chr(chunkIndex^);
+    s[i] := AnsiChar(chunkIndex^);
     inc(chunkIndex);
   end;
   result := string(s);
