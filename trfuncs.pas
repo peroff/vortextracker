@@ -170,7 +170,7 @@ type
   TSpeccyModule = packed record
     case Integer of
       0: (Index: array[0..65535] of byte);
-      1: (PT3_Name: array[0..$62] of char;
+      1: (PT3_Name: array[0..$62] of AnsiChar;
         PT3_Table: byte;
         PT3_Delay: byte;
         PT3_NumberOfPositions: byte;
@@ -184,11 +184,11 @@ type
         PT2_SamplePointers: array[0..31] of word;
         PT2_OrnamentPointers: array[0..15] of word;
         PT2_PatternsPointer: word;
-        PT2_MusicName: array[0..29] of char;
+        PT2_MusicName: array[0..29] of AnsiChar;
         PT2_PositionList: array[0..65535 - 131] of byte);
       3: (ST_Delay: byte;
         ST_PositionsPointer, ST_OrnamentsPointer, ST_PatternsPointer: word;
-        ST_Name: array[0..17] of char;
+        ST_Name: array[0..17] of AnsiChar;
         ST_Size: word);
       4: (STP_Delay: byte;
         STP_PositionsPointer, STP_PatternsPointer,
@@ -204,7 +204,7 @@ type
         ASC0_PatternsPointers, ASC0_SamplesPointers, ASC0_OrnamentsPointers: word;
         ASC0_Number_Of_Positions: byte;
         ASC0_Positions: array[0..65535 - 8] of byte);
-      8: (PSC_MusicName: array[0..68] of char;
+      8: (PSC_MusicName: array[0..68] of AnsiChar;
         PSC_UnknownPointer: word;
         PSC_PatternsPointer: word;
         PSC_Delay: byte;
@@ -222,12 +222,12 @@ type
         PT1_SamplesPointers: array[0..15] of word;
         PT1_OrnamentsPointers: array[0..15] of word;
         PT1_PatternsPointer: word;
-        PT1_MusicName: array[0..29] of char;
+        PT1_MusicName: array[0..29] of AnsiChar;
         PT1_PositionList: array[0..65535 - 99] of byte);
       11: (GTR_Delay: byte;
-        GTR_ID: array[0..3] of char;
+        GTR_ID: array[0..3] of AnsiChar;
         GTR_Address: word;
-        GTR_Name: array[0..31] of char;
+        GTR_Name: array[0..31] of AnsiChar;
         GTR_SamplesPointers: array[0..14] of word;
         GTR_OrnamentsPointers: array[0..15] of word;
         GTR_PatternsPointers: array[0..31] of packed record
@@ -236,7 +236,7 @@ type
         GTR_NumberOfPositions: byte;
         GTR_LoopPosition: byte;
         GTR_Positions: array[0..65536 - 295 - 1] of byte);
-      12: (FTC_MusicName: array[0..68] of char;
+      12: (FTC_MusicName: array[0..68] of AnsiChar;
         FTC_Delay: byte;
         FTC_Loop_Position: byte;
         FTC_Slack: integer;
@@ -2242,12 +2242,13 @@ begin
   end;
   if DetectModuleHeader then
     VTM1.VortexModule_Header := StrLComp(@PT3.PT3_Name, 'ProTracker 3.', 13) <> 0;
-  SetLength(VTM1.Title, 32);
-  Move(PT3.PT3_Name[$1E], VTM1.Title[1], 32);
+
+  VTM1.Title := AnsiCharArrToString(@PT3.PT3_Name[$1E], 32);
   VTM1.Title := TrimRight(VTM1.Title);
-  SetLength(VTM1.Author, 32);
-  Move(PT3.PT3_Name[$42], VTM1.Author[1], 32);
+
+  VTM1.Author := AnsiCharArrToString(@PT3.PT3_Name[$42], 32);
   VTM1.Author := TrimRight(VTM1.Author);
+
   VTM1.Ton_Table := PT3.PT3_Table;
   VTM1.Initial_Delay := PT3.PT3_Delay;
   VTM1.Positions.Loop := PT3.PT3_LoopPosition;
@@ -2910,11 +2911,11 @@ end;
 function VTM2PT3(PT3: PSpeccyModule; VTM: PModule;
   var Module_Size: Integer): string;
 const
-  Pt3Id: array[Boolean, 0..29] of char =
+  Pt3Id: array[Boolean, 0..29] of AnsiChar =
   ('ProTracker 3.6 compilation of ',
     'Vortex Tracker II 1.0 module: ');
-  ById: array[0..3] of char = ' by ';
-  EmptyPatternString = #$B1#64#$D0#0;
+  ById: array[0..3] of AnsiChar = ' by ';
+  EmptyPatternString: AnsiString = #$B1#64#$D0#0;
 var
   i, i1, j, k, d: integer;
   Patterns: array[0..MaxPatNum] of boolean;
@@ -2922,7 +2923,7 @@ var
   VTMPat2PT3Pat: array[0..MaxPatNum] of integer;
   PatOfs: array[0..MaxNumOfPats * 3 - 1] of integer;
   MaxPattern: integer;
-  PatStrs: array[0..MaxNumOfPats * 3 - 1] of string;
+  PatStrs: array[0..MaxNumOfPats * 3 - 1] of AnsiString;
   PatsIndexes: array[0..MaxPatNum, 0..2] of integer;
   PatNum, StrNum: integer;
   DeltT, TnStp, TnDl, TnCurDl, //<--- vars to avoid bug in Alone Coder's PT3 player
@@ -2945,14 +2946,12 @@ begin
   Move(Pt3Id[VTM.VortexModule_Header and (VTM.FeaturesLevel = 1), 0], PT3.PT3_Name, 30);
   if VTM.FeaturesLevel <> 1 then PT3.PT3_Name[13] := AnsiChar($35 + VTM.FeaturesLevel);
 
-  i := 32; if i > Length(VTM.Title) then i := Length(VTM.Title);
-  Move(VTM.Title[1], PT3.PT3_Name[30], i);
+  i := StringToAnsiCharArr(VTM.Title, @PT3.PT3_Name[30], 32);
   j := 32 - i; if j <> 0 then FillChar(PT3.PT3_Name[30 + i], j, 32);
 
   Move(ById, PT3.PT3_Name[62], 4);
 
-  i := 32; if i > Length(VTM.Author) then i := Length(VTM.Author);
-  Move(VTM.Author[1], PT3.PT3_Name[66], i);
+  i := StringToAnsiCharArr(VTM.Author, @PT3.PT3_Name[66], 32);
   FillChar(PT3.PT3_Name[66 + i], 32 - i + 1, 32);
 
   PT3.PT3_Table := VTM.Ton_Table;
@@ -3568,8 +3567,7 @@ begin
     VTM.FeaturesLevel := 0;
   if DetectModuleHeader then
     VTM.VortexModule_Header := False;
-  SetLength(VTM.Title, 30);
-  Move(PT2.PT2_MusicName, VTM.Title[1], 30);
+  VTM.Title := AnsiCharArrToString(@PT2.PT2_MusicName, 30);
   VTM.Title := TrimRight(VTM.Title);
   VTM.Author := '';
   VTM.Ton_Table := 1;
@@ -3767,8 +3765,7 @@ var
   Pats: array[0..MaxPatNum] of TSTCPat;
 begin
   Result := True;
-  SetLength(VTM.Title, 18);
-  Move(STC.ST_Name, VTM.Title[1], 18);
+  VTM.Title := AnsiCharArrToString(@STC.ST_Name, 18);
   if (VTM.Title = 'SONG BY ST COMPILE') or
     (VTM.Title = 'SONG BY MB COMPILE') or
     (VTM.Title = 'SONG BY ST-COMPILE') or
@@ -3782,9 +3779,9 @@ begin
     if STC.ST_Size <> FSize then
       if (STC.ST_Size and 255) in [32..127] then
       begin
-        VTM.Title := VTM.Title + AnsiChar(STC.ST_Size and 255);
+        VTM.Title := VTM.Title + AnsiChr(STC.ST_Size and 255);
         if (STC.ST_Size shr 8) in [32..127] then
-          VTM.Title := VTM.Title + AnsiChar(STC.ST_Size shr 8)
+          VTM.Title := VTM.Title + AnsiChr(STC.ST_Size shr 8)
       end;
     VTM.Title := TrimRight(VTM.Title)
   end;
@@ -4138,12 +4135,10 @@ var
   Pats: array[0..MaxPatNum] of TSTPPat;
 begin
   Result := True;
-  SetLength(KsaId2, 28);
-  Move(STP.Index[10], KsaId2[1], 28);
+  KsaId2 := AnsiCharArrToString(@STP.Index[10], 28);
   if KsaId2 = KsaId then
   begin
-    SetLength(VTM.Title, 25);
-    Move(STP.Index[38], VTM.Title[1], 25);
+    VTM.Title := AnsiCharArrToString(@STP.Index[38], 25);
     VTM.Title := TrimRight(VTM.Title)
   end
   else
@@ -5128,11 +5123,9 @@ begin
   Result := True;
   if ASC.ASC1_PatternsPointers - ASC.ASC1_Number_Of_Positions = 72 then
   begin
-    SetLength(VTM.Title, 20);
-    Move(ASC.Index[ASC.ASC1_PatternsPointers - 44], VTM.Title[1], 20);
+    VTM.Title := AnsiCharArrToString(@ASC.Index[ASC.ASC1_PatternsPointers - 44], 20);
     VTM.Title := TrimRight(VTM.Title);
-    SetLength(VTM.Author, 20);
-    Move(ASC.Index[ASC.ASC1_PatternsPointers - 20], VTM.Author[1], 20);
+    VTM.Author := AnsiCharArrToString(@ASC.Index[ASC.ASC1_PatternsPointers - 20], 20);
     VTM.Author := TrimRight(VTM.Author)
   end
   else
@@ -5663,11 +5656,9 @@ var
 begin
   Result := True;
   PSC1_00 := CharInSet_(PSC.PSC_MusicName[8], ['0'..'3']);
-  SetLength(VTM.Title, 20);
-  Move(PSC.PSC_MusicName[$19], VTM.Title[1], 20);
+  VTM.Title := AnsiCharArrToString(@PSC.PSC_MusicName[$19], 20);
   VTM.Title := TrimRight(VTM.Title);
-  SetLength(VTM.Author, 20);
-  Move(PSC.PSC_MusicName[$31], VTM.Author[1], 20);
+  VTM.Author := AnsiCharArrToString(@PSC.PSC_MusicName[$31], 20);
   VTM.Author := TrimRight(VTM.Author);
   VTM.Ton_Table := 1;
   VTM.Initial_Delay := PSC.PSC_Delay;
@@ -6082,7 +6073,7 @@ function LoadAndDetect(ZXP: PSpeccyModule; FileName: string; var Length: integer
   var ZXAddr: word; var Tm: integer; var Andsix: byte;
   var AuthorName, SongName: string): Available_Types;
 type
-  TStr4 = array[0..3] of char;
+  TStr4 = array[0..3] of AnsiChar;
 
   function GetTSType(TS: TStr4): Available_Types;
   const
@@ -6122,7 +6113,7 @@ var
   s: string;
   AYFileHeader: TAYFileHeader;
   SongStructure: TSongStructure;
-  Ch: char;
+  Ch: AnsiChar;
   Byt: byte;
   Wrd: word;
   TSData: packed record
@@ -6221,7 +6212,7 @@ begin
         AuthorName := '';
         repeat
           BlockRead(f, Ch, 1);
-          if Ch <> #0 then AuthorName := AuthorName + Ch;
+          if Ch <> #0 then AuthorName := AuthorName + Char(Ch);
         until Ch = #0;
         AuthorName := Trim(AuthorName);
         if System.Length(AuthorName) > 32 then SetLength(AuthorName, 32);
@@ -6234,7 +6225,7 @@ begin
         SongName := '';
         repeat
           BlockRead(f, Ch, 1);
-          if Ch <> #0 then SongName := SongName + Ch;
+          if Ch <> #0 then SongName := SongName + Char(Ch);
         until Ch = #0;
         SongName := Trim(SongName);
         if System.Length(SongName) > 32 then SetLength(SongName, 32);
@@ -6580,8 +6571,7 @@ var
   quit: boolean;
 begin
   Result := True;
-  SetLength(VTM.Title, 30);
-  Move(PT1.PT1_MusicName, VTM.Title[1], 30);
+  VTM.Title := AnsiCharArrToString(@PT1.PT1_MusicName, 30);
   VTM.Title := TrimRight(VTM.Title);
   VTM.Author := '';
   VTM.Ton_Table := 1;
@@ -6793,8 +6783,7 @@ var
   quit: boolean;
 begin
   Result := True;
-  SetLength(VTM.Title, 32);
-  Move(GTR.GTR_Name, VTM.Title[1], 32);
+  VTM.Title := AnsiCharArrToString(@GTR.GTR_Name, 32);
   VTM.Title := TrimRight(VTM.Title);
   VTM.Author := '';
   VTM.Ton_Table := 1;
@@ -7066,8 +7055,7 @@ var
   Pats: array[0..MaxPatNum] of TFTCPat;
 begin
   Result := True;
-  SetLength(VTM.Title, 42);
-  Move(FTC.FTC_MusicName[8], VTM.Title[1], 42);
+  VTM.Title := AnsiCharArrToString(@FTC.FTC_MusicName[8], 42);
 
   // Detect FTC version
   if (FTC.Index[$32] <> $3b) and (FTC.Index[$32] < 4) then
@@ -8809,8 +8797,7 @@ begin
   if (i > 8) and (i <= 65536 - 8) then
   begin
     Dec(i, 8);
-    SetLength(s, i);
-    move(PSM.PSM_Remark, s[1], i);
+    s := AnsiCharArrToString(@PSM.PSM_Remark, i);
     if s = 'psm1'#0 then
       s := ''
     else if (i > 5) and (Copy(s, 1, 5) = 'psm1'#0) then

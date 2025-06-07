@@ -16,6 +16,9 @@ function CharInSet_(C: WideChar; const CharSet: TSysCharSet): Boolean; overload;
 // can't be directly casted to WideChar. E.g. AnsiChar(149) = WideChar(8226)
 function AnsiChr(C: Byte): Char;
 
+function AnsiCharArrToString(C: PAnsiChar; Len: Integer): string;
+function StringToAnsiCharArr(const S: string; C: PAnsiChar; Len: Integer): Integer;
+
 implementation
 
 function CharInSet_(C: AnsiChar; const CharSet: TSysCharSet): Boolean;
@@ -39,6 +42,36 @@ end;
 function AnsiChr(C: Byte): Char;
 begin
   Result := {$IFDEF UNICODE}WideChar(AnsiChar(C)){$ELSE}Chr(C){$ENDIF};
+end;
+
+function AnsiCharArrToString(C: PAnsiChar; Len: Integer): string;
+var
+  TmpStr: AnsiString;
+begin
+  if Len > 0 then
+  begin
+    SetLength(TmpStr, Len);
+    Move(C^, TmpStr[1], Len * SizeOf(AnsiChar));
+    Result := string(TmpStr);
+  end
+  else
+    Result := '';
+end;
+
+function StringToAnsiCharArr(const S: string; C: PAnsiChar; Len: Integer): Integer;
+var
+  TmpStr: AnsiString;
+begin
+  if Len > Length(S) then
+    Len := Length(S);
+
+  if Len > 0 then
+  begin
+    TmpStr := AnsiString(S);
+    Move(TmpStr[1], C^, Len * SizeOf(AnsiChar));
+  end;
+
+  Result := Len;
 end;
 
 end.
