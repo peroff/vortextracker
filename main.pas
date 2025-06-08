@@ -793,7 +793,7 @@ implementation
 {$J+} { Assignable Typed Constant }
 
 uses About, options, TrkMng, GlbTrn, ExportZX, selectts, TglSams, HotKeys,
-  Math, Types, InstrumentsPack, Registry, ShlObj, StrUtils, ClipBrd;
+  Math, Types, InstrumentsPack, Registry, ShlObj, StrUtils, ClipBrd, Misc;
 
 type
   TStr4 = array[0..3] of AnsiChar;
@@ -4638,6 +4638,23 @@ var
   CurrentWindow: TMDIChild;
   s: string;
   ErrMsg: string;
+
+  procedure WriteAnsiString(const S: string);
+  var
+    TmpStr: AnsiString;
+    Zero: Byte;
+  begin
+    if Length(S) > 0 then
+    begin
+      TmpStr := AnsiString(S);
+      BlockWrite(f, TmpStr[1], (Length(TmpStr) + 1) * SizeOf(AnsiChar));
+    end
+    else begin
+      Zero := 0;
+      BlockWrite(f, Zero, SizeOf(Zero));
+    end;
+  end;
+
 begin
   if MDIChildCount = 0 then exit;
   CurrentWindow := TMDIChild(ActiveMDIChild);
@@ -4679,18 +4696,18 @@ begin
     begin
       inc(sndhhdrsz, 4 + i + 1);
       BlockWrite(f, TITL, 4);
-      BlockWrite(f, VTMP.Title[1], i + 1)
+      WriteAnsiString(VTMP.Title);
     end;
     i := Length(VTMP.Author);
     if i <> 0 then
     begin
       inc(sndhhdrsz, 4 + i + 1);
       BlockWrite(f, COMM, 4);
-      BlockWrite(f, VTMP.Author[1], i + 1)
+      WriteAnsiString(VTMP.Author);
     end;
     BlockWrite(f, CONV, 4);
     i := Length(FullVersString) + 1; inc(sndhhdrsz, i);
-    BlockWrite(f, FullVersString[1], i);
+    WriteAnsiString(FullVersString);
     s := '';
     if InputQuery('SNDHv2 Extra TAG', 'Year of release (empty if no):', s) then
     begin
@@ -4700,13 +4717,13 @@ begin
       begin
         inc(sndhhdrsz, i + 5);
         BlockWrite(f, YEAR, 4);
-        BlockWrite(f, s[1], i + 1);
+        WriteAnsiString(s);
       end;
     end;
     j := round(Interrupt_Freq / 1000);
     s := 'TC' + IntToStr(j);
     i := Length(s) + 1; inc(sndhhdrsz, i);
-    BlockWrite(f, s[1], i);
+    WriteAnsiString(s);
     BlockWrite(f, TIME, 4);
     i := round(TotInts / j); if i > 65535 then i := 65535;
     i := IntelWord(i);
@@ -4769,6 +4786,23 @@ var
   AYPoints: TPoints;
   CurrentWindow: TMDIChild;
   ErrMsg:String;
+
+  procedure WriteAnsiString(const S: string);
+  var
+    TmpStr: AnsiString;
+    Zero: Byte;
+  begin
+    if Length(S) > 0 then
+    begin
+      TmpStr := AnsiString(S);
+      BlockWrite(f, TmpStr[1], (Length(TmpStr) + 1) * SizeOf(AnsiChar));
+    end
+    else begin
+      Zero := 0;
+      BlockWrite(f, Zero, SizeOf(Zero));
+    end;
+  end;
+
 begin
   if MDIChildCount = 0 then exit;
   CurrentWindow := TMDIChild(ActiveMDIChild);
@@ -4876,7 +4910,7 @@ begin
             s := ExtractFileName(SaveDialogZXAY.FileName);
             j := Length(s) - 3;
             if j > 8 then j := 8;
-            if j > 0 then Move(s[1], Name, j);
+            StringToAnsiCharArr(s, @Name, j);
             if t = 0 then
               Typ := 'C'
             else
@@ -4965,17 +4999,9 @@ begin
             Zero := 0;
           end;
           BlockWrite(f, AYPoints, SizeOf(TPoints));
-          j := Length(CurrentWindow.VTMP.Title);
-          if j <> 0 then
-            BlockWrite(f, CurrentWindow.VTMP.Title[1], j + 1)
-          else
-            BlockWrite(f, j, 1);
-          j := Length(CurrentWindow.VTMP.Author);
-          if j <> 0 then
-            BlockWrite(f, CurrentWindow.VTMP.Author[1], j + 1)
-          else
-            BlockWrite(f, j, 1);
-          BlockWrite(f, FullVersString[1], Length(FullVersString) + 1);
+          WriteAnsiString(CurrentWindow.VTMP.Title);
+          WriteAnsiString(CurrentWindow.VTMP.Author);
+          WriteAnsiString(FullVersString);
         end;
       3:
         begin
@@ -4994,7 +5020,7 @@ begin
             s := ExtractFileName(SaveDialogZXAY.FileName);
             j := Length(s) - 4;
             if j > 8 then j := 8;
-            if j > 0 then Move(s[1], Name2, j);
+            StringToAnsiCharArr(s, @Name2, j);
             Typ2 := 'C';
             Start2 := ZXCompAddr + zxplsz + zxdtsz;
             Leng2 := ZXModSize1 + ZXModSize2;
@@ -5039,7 +5065,7 @@ begin
             s := ExtractFileName(SaveDialogZXAY.FileName);
             j := Length(s) - 4;
             if j > 10 then j := 10;
-            if j > 0 then Move(s[1], Name, j);
+            StringToAnsiCharArr(s, @Name, j);
             k := 0; for j := 2 to 19 do k := k xor Ind[j]; Sum := k;
             BlockWrite(f, TAPHdr, 21);
             Sz := 2 + ZXModSize1 + ZXModSize2; Flag := 255;
