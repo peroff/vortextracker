@@ -33,7 +33,7 @@ type
     BytesPerSec: longint;
     align: smallint;
     Bits: smallint;
-    idData: array [0..3] of char;
+    idData: array [0..3] of AnsiChar;
     DataLen: longint;
   end;
 

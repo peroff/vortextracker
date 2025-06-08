@@ -796,7 +796,7 @@ uses About, options, TrkMng, GlbTrn, ExportZX, selectts, TglSams, HotKeys,
   Math, Types, InstrumentsPack, Registry, ShlObj, StrUtils, ClipBrd;
 
 type
-  TStr4 = array[0..3] of char;
+  TStr4 = array[0..3] of AnsiChar;
 
 
 const
@@ -4624,11 +4624,11 @@ end;
 
 procedure TMainForm.SaveSNDHMenuClick(Sender: TObject);
 const
-  TITL: array[0..3] of char = 'TITL';
-  COMM: array[0..3] of char = 'COMM';
-  CONV: array[0..3] of char = 'CONV';
-  YEAR: array[0..3] of char = 'YEAR';
-  TIME: array[0..3] of char = 'TIME';
+  TITL: array[0..3] of AnsiChar = 'TITL';
+  COMM: array[0..3] of AnsiChar = 'COMM';
+  CONV: array[0..3] of AnsiChar = 'CONV';
+  YEAR: array[0..3] of AnsiChar = 'YEAR';
+  TIME: array[0..3] of AnsiChar = 'TIME';
 var
   sndhplsz, sndhhdrsz: integer;
   PT3: TSpeccyModule;
@@ -4740,7 +4740,7 @@ var
   hobetahdr: packed record
     case Boolean of
       False:
-      (Name: array[0..7] of char; Typ: char;
+      (Name: array[0..7] of AnsiChar; Typ: AnsiChar;
         Start, Leng, SectLeng, CheckSum: word);
       True:
       (Ind: array[0..16] of byte);
@@ -4748,10 +4748,10 @@ var
   SCLHdr: packed record
     case Boolean of
       False:
-      (SCL: array[0..7] of char;
+      (SCL: array[0..7] of AnsiChar;
         NBlk: byte;
-        Name1: array[0..7] of char; Typ1: char; Start1, Leng1: word; Sect1: byte;
-        Name2: array[0..7] of char; Typ2: char; Start2, Leng2: word; Sect2: byte; );
+        Name1: array[0..7] of AnsiChar; Typ1: AnsiChar; Start1, Leng1: word; Sect1: byte;
+        Name2: array[0..7] of AnsiChar; Typ2: AnsiChar; Start2, Leng2: word; Sect2: byte; );
       True:
       (Ind: array[0..36] of byte);
   end;
@@ -4759,7 +4759,7 @@ var
     case Boolean of
       False:
       (Sz: word; Flag, Typ: byte;
-        Name: array[0..9] of char; Leng, Start, Trash: word; Sum: byte);
+        Name: array[0..9] of AnsiChar; Leng, Start, Trash: word; Sum: byte);
       True:
       (Ind: array[0..20] of byte);
   end;

@@ -24,7 +24,7 @@ type
  TModTypes = packed record
  case Integer of
  0: (Index:array[0..65535] of byte);
- 1: (PT3_MusicName:array[0..$62]of char;
+ 1: (PT3_MusicName:array[0..$62]of AnsiChar;
      PT3_TonTableId:byte;
      PT3_Delay:byte;
      PT3_NumberOfPositions:byte;
