@@ -108,7 +108,7 @@ begin
   if Res <> 0 then
   begin
     EnterCriticalSection(WOCS);
-    waveOutGetErrorText(Res, ErrMsg, SizeOf(ErrMsg));
+    waveOutGetErrorText(Res, ErrMsg, Length(ErrMsg));
     LeaveCriticalSection(WOCS);
     raise EMultiMediaError.Create(ErrMsg)
   end

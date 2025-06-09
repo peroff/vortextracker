@@ -1916,14 +1916,14 @@ begin
   try
     // clear the list from possible leftover from prior operations
     AList.Clear;
-    vDrivesSize := GetLogicalDriveStrings(SizeOf(vDrives), vDrives);
+    vDrivesSize := GetLogicalDriveStrings(Length(vDrives) - 1, vDrives);
     if vDrivesSize=0 then Exit; // no drive found, no further processing needed
 
     vDrive := vDrives;
     while vDrive^ <> #0 do
     begin
       AList.Add(StrPas(vDrive));
-      Inc(vDrive, SizeOf(vDrive));
+      Inc(vDrive, StrLen(vDrive) + 1);
     end;
   finally
 	AList.EndUpdate;

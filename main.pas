@@ -1257,9 +1257,9 @@ end;
 
 function GetWin(Comand: string): string;
 var
-  buff: array [0 .. $FF] of char;
+  buff: array [0..255] of char;
 begin
-  ExpandEnvironmentStrings(PChar(Comand), buff, SizeOf(buff));
+  ExpandEnvironmentStrings(PChar(Comand), buff, Length(buff));
   Result := buff;
 end;
 
