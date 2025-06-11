@@ -19414,8 +19414,8 @@ const
 procedure TTracks.CopyToClipboard;
 var
   hglbCopy: HGLOBAL;
-  s: string;
-  lptstrCopy: PChar;
+  s: AnsiString;
+  lptstrCopy: PAnsiChar;
   X1, X2, Y1, Y2, i, l, ps: Integer;
   RepaintDisabled: Boolean;
   // sc:array[0..2] of string;
@@ -19492,11 +19492,12 @@ begin
     hglbCopy := GlobalAlloc(GMEM_MOVEABLE and GMEM_DDESHARE, l);
     lptstrCopy := GlobalLock(hglbCopy);
     try
-      ps := Length(ClipHdrPat);
-      Move(ClipHdrPat[1], lptstrCopy^, ps);
+      s := ClipHdrPat;
+      ps := Length(s);
+      Move(s[1], lptstrCopy^, ps);
       for i := Y1 to Y2 do
       begin
-        s := GetPatternLineString(ShownPattern, i, ChanAlloc, True, True) + #13#10;
+        s := AnsiString(GetPatternLineString(ShownPattern, i, ChanAlloc, True, True) + #13#10);
         for l := 0 to X1 - 1 do
           s[l + TracksCursorXLeft + 1] := #32;
         l := 1;
@@ -19540,24 +19541,26 @@ end;
 
 procedure TTracks.PasteFromClipboard(Merge: Boolean);
 
-  function GetStr(lps: PChar; var s: string): Boolean;
+  function GetStr(lps: PAnsiChar; var s: string): Boolean;
   var
-    ps: PChar;
+    ps: PAnsiChar;
     l: Integer;
+    TmpStr: AnsiString;
   begin
     Result := False;
     ps := StrScan(lps, #13);
     if ps = nil then
       exit;
     l := Integer(ps) - Integer(lps);
-    SetLength(s, l);
-    Move(lps^, s[1], l);
+    SetLength(TmpStr, l);
+    Move(lps^, TmpStr[1], l);
+    s := string(TmpStr);
     Result := True
   end;
 
 var
   hglb: HGLOBAL;
-  lps, ps: PChar;
+  lps, ps: PAnsiChar;
   X1, X2, Y1, Y2, sz, l, i, j, k, m, newe, newn: Integer;
   newc: array[0..2] of TAdditionalCommand;
   s: string;
