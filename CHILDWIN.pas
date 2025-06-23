@@ -9330,7 +9330,9 @@ begin
   finally
     CloseFile(TxtFile);
   end;
+  {$WARN SYMBOL_DEPRECATED OFF}
   SyncSampleBufferFileAge := FileAge(SyncSampleBufferFile);
+  {$WARN SYMBOL_DEPRECATED ON}
   SyncBufferBlocked := False;
 end;
 
@@ -9366,7 +9368,9 @@ begin
     finally
       CloseFile(TxtFile);
     end;
+    {$WARN SYMBOL_DEPRECATED OFF}
     SyncSamplePartFileAge := FileAge(SyncSamplePartFile);
+    {$WARN SYMBOL_DEPRECATED ON}
     SyncBufferBlocked := False;
 
     MainForm.BuffSample.Items := Samples.ShownSample.Items;
@@ -10849,7 +10853,9 @@ begin
   finally
     CloseFile(TxtFile);
   end;
+  {$WARN SYMBOL_DEPRECATED OFF}
   SyncOrnamentBufferFileAge := FileAge(SyncOrnamentBufferFile);
+  {$WARN SYMBOL_DEPRECATED ON}
   SyncBufferBlocked := False;
 
 

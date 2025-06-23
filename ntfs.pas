@@ -121,7 +121,9 @@ begin
       Result := ((SearchRec.Attr and FILE_ATTRIBUTE_REPARSE_POINT) <> 0);
       // If so the dwReserved0 field contains the reparse tag
       if Result then
+        {$WARN SYMBOL_PLATFORM OFF}
         Tag := SearchRec.FindData.dwReserved0;
+        {$WARN SYMBOL_PLATFORM ON}
       FindClose(SearchRec);
     end;
   end;

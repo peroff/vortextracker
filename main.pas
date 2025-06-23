@@ -853,7 +853,9 @@ begin
   CurDesktop := OpenInputDesktop(0, false, DESKTOP_READOBJECTS); //wine doesn't support that
   try
     if CurDesktop > 0 then
+      {$WARN SYMBOL_PLATFORM OFF}
       Win32Check(Windows.GetCursorPos(Result))
+      {$WARN SYMBOL_PLATFORM ON}
     else
       Result := Point(0, 0);
   finally
@@ -6574,9 +6576,11 @@ begin
   if SyncBufferBlocked then Exit;
   if MDIChildCount = 0 then Exit;
 
+  {$WARN SYMBOL_DEPRECATED OFF}
   SampleBufferAge     := FileAge(SyncSampleBufferFile);
   OrnamenBufferAge    := FileAge(SyncOrnamentBufferFile);
   SamplePartBufferAge := FileAge(SyncSamplePartFile);
+  {$WARN SYMBOL_DEPRECATED ON}
 
   SampleBufferReady     := (SampleBufferAge  <> -1) and (SampleBufferAge <> SyncSampleBufferFileAge);
   OrnamentBufferReady   := (OrnamenBufferAge <> -1) and (OrnamenBufferAge <> SyncOrnamentBufferFileAge);
