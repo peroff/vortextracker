@@ -17914,7 +17914,7 @@ procedure TMDIChild.SpeedButton21Click(Sender: TObject);
 const
   FN = 'VTIITempOrnament.txt';
 var
-  tmpp, dir: string;
+  tmpp, dir, commandLine: string;
   ExCode: DWORD;
   SI: STARTUPINFO;
   PI: PROCESS_INFORMATION;
@@ -17931,9 +17931,10 @@ begin
       exit
     end;
   dir := ExtractFilePath(ParamStr(0));
+  commandLine := dir + 'orgen.exe ' + FN;
   FillChar(SI, sizeof(SI), 0);
   SI.cb := sizeof(SI);
-  if not CreateProcess(PChar(dir + 'orgen.exe'), PChar(dir + 'orgen.exe ' + FN), nil, nil, False, 0, nil, PChar(dir), SI, PI) then
+  if not CreateProcess(PChar(dir + 'orgen.exe'), PChar(commandLine), nil, nil, False, 0, nil, PChar(dir), SI, PI) then
     RaiseLastOSError
   else
   begin
