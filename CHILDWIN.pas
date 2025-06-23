@@ -6481,8 +6481,8 @@ end;
 procedure TMDIChild.ChangeTracks(Pat, Line, Chan, CursorX, n: Integer; Keyboard: Boolean);
 var
   old, r: Integer;
-  oldStr: string[2];
-  newStr: string[1];
+  oldStr: string;
+  newStr: string;
 begin
   old := 0;
   case CursorX of
