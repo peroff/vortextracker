@@ -8,13 +8,15 @@ uses
 // Unicode-enabled checks whether a given character is contained within
 // a set of chars
 function CharInSet_(C: AnsiChar; const CharSet: TSysCharSet): Boolean; overload;
+{$IF CompilerVersion >= 17.0}inline;{$IFEND}  // Delphi 2005 or above
 function CharInSet_(C: WideChar; const CharSet: TSysCharSet): Boolean; overload;
+{$IF CompilerVersion >= 17.0}inline;{$IFEND}  // Delphi 2005 or above
 
 // Converts a single byte ANSI character code to the Char type. We need to use
 // this in Unicode Delphi versions because chars from the top half of the
 // ANSI table (#128..#255) have another, double-byte codes in Unicode and
 // can't be directly casted to WideChar. E.g. AnsiChar(149) = WideChar(8226)
-function AnsiChr(C: Byte): Char;
+function AnsiChr(C: Byte): Char; {$IF CompilerVersion >= 17.0}inline;{$IFEND}
 
 function AnsiCharArrToString(C: PAnsiChar; Len: Integer): string;
 function StringToAnsiCharArr(const S: string; C: PAnsiChar; Len: Integer): Integer;
