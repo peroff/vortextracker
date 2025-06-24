@@ -54,6 +54,9 @@ uses
 
 begin
   Application.Initialize;
+  {$IF CompilerVersion >= 18.5}  // Delphi 2007 or above
+  Application.MainFormOnTaskbar := True;
+  {$IFEND}
   Application.Title := 'Vortex Tracker';
   Application.CreateForm(TMainForm, MainForm);
   Application.CreateForm(TAboutBox, AboutBox);
