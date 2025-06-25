@@ -11125,7 +11125,7 @@ var
             IncVal:
               IncreaseOrnamentValue(i, Shift);
             DecVal:
-              IncreaseOrnamentValue(i, Shift);
+              DecreaseOrnamentValue(i, Shift);
           end;
         end;
         SaveOrnamentRedo;
@@ -16082,7 +16082,6 @@ begin
   if EdgeX2<8 then
     PositionsScrollBox.HorzScrollBar.Position := PositionsScrollBox.HorzScrollBar.Position + 2*(8-EdgeX2);
 
-  caption:=inttostr(CurrentCol)+' '+inttostr(EdgeX1)+' '+inttostr(EdgeX2);
   if Accept then
   begin
     if (PatternsOrderSelection.Right <> PatternsOrderSelection.Left) then
@@ -19425,6 +19424,8 @@ var
   lptstrCopy: PAnsiChar;
   X1, X2, Y1, Y2, i, l, ps: Integer;
   RepaintDisabled: Boolean;
+  dectmp: Boolean;
+  decxtmp: Integer;
   // sc:array[0..2] of string;
 begin
   if not OpenClipboard(MainForm.Handle) then
@@ -19465,6 +19466,11 @@ begin
       Y2 := SelY
     end;
 
+    dectmp := DecBaseLinesOn;
+    DecBaseLinesOn := False;
+    decxtmp := TracksCursorXLeft;
+    if dectmp then
+      dec(TracksCursorXLeft);
     // Note poses [8, 22, 36]
 
     // 1 channel
@@ -19523,6 +19529,9 @@ begin
     CloseClipboard
   end;
 
+  DecBaseLinesOn := dectmp;
+  TracksCursorXLeft := decxtmp;
+
   // End of dirty hack
   if RepaintDisabled then
   begin
@@ -19568,7 +19577,7 @@ procedure TTracks.PasteFromClipboard(Merge: Boolean);
 var
   hglb: HGLOBAL;
   lps, ps: PAnsiChar;
-  X1, X2, Y1, Y2, sz, l, i, j, k, m, newe, newn: Integer;
+  X1, X2, Y1, Y2, sz, l, i, j, k, m, newe, newn, e: Integer;
   newc: array[0..2] of TAdditionalCommand;
   s: string;
   nums: array[0..MaxPatLen - 1, 0..32] of Integer;
@@ -19634,8 +19643,8 @@ begin
     if not GetStr(ps, s) then
       exit;
 
-    if DecBaseLinesOn then
-      s := copy(s, 2, Length(s));
+//    if DecBaseLinesOn then
+//      s := copy(s, 2, Length(s));
 
     inc(Integer(ps), Length(s) + 2);
     if Length(s) <> 49 then
@@ -19774,7 +19783,13 @@ begin
         end
         else
         begin
-          if (m = 5) and not DecBaseNoiseOn then
+          if (m = 0) and (nums[l,k] >= 256 -2) then
+          begin
+            e := Round(getnotefreq(TMDIChild(ParentWin).VTMP.Ton_Table, nums[l,k]-256) / 16);
+            if (e >= 2) and (e < $10000) then newe := e
+            else newe:=0;
+          end
+          else if (m = 5) and not DecBaseNoiseOn then
             sz := 1
           else if (m = 5) and DecBaseNoiseOn then
             sz := 3
@@ -19795,7 +19810,8 @@ begin
               sz := ChanAlloc[sz];
             case m of
               0:
-                newe := newe and $FFF or (nums[l, k] shl 12);
+                if nums[l, k] < 256 - 2 then
+                  newe := newe and $FFF or (nums[l, k] shl 12);
               1:
                 newe := newe and $F0FF or (nums[l, k] shl 8);
               2:
@@ -19807,14 +19823,14 @@ begin
                   if DecBaseNoiseOn then  // fix for dec noise
                     newn := 10 * nums[l, k]
                   else
-                    newn := newn and 15 or (nums[l, k] shl 4);
+                    newn := (newn and $0F) or (nums[l, k] shl 4);
                 end;
               6:
                 begin
                   if DecBaseNoiseOn then  // fix for dec noise
-                    newn := newn + nums[l, k]
+                    newn := (newn div 10)*10 + nums[l, k]
                   else
-                    newn := newn and $F0 or nums[l, k];
+                    newn := (newn and $F0) or (nums[l, k] and $0F);
                 end;
               12, 26, 40:
                 if not Merge or (nums[l, k] <> 0) then
