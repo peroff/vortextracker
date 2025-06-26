@@ -22050,6 +22050,7 @@ begin
   end;
 
   if j>0 then
+  begin
     IIDL := ILCreateFromPath(PChar(ExtractFilePath(Files[0])));
     try
       result := SHOpenFolderAndSelectItems(IIDL, j, PItemIDList(AList), 0) = S_OK;
@@ -22057,8 +22058,10 @@ begin
       ILFree(IIDL);
       for i := 0 to j-1 do
         ILFree(AList[i]);
+      AList := nil;
     end;
-  SetLength(AList,0);
+  end;
+
   FreeAndNil(Files)
 end;
 
