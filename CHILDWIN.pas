@@ -4557,7 +4557,7 @@ begin
 
       TTextCol:=COutText;
       LLDown := False;
-      if (TemLen<>0)  and (Y<>CurY) and (LLStr[Lin2 mod TemLen +1]=' ') then LLDown:=True;
+      if (TemLen<>0)  {and (Y<>CurY)} and (LLStr[Lin2 mod TemLen +1]=' ') then LLDown:=True;
       if LLDown then TTextCol:=BlendColor(TTextCol,CBackground,LLd);
       TextColor(TTextCol);
 
