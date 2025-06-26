@@ -1851,6 +1851,8 @@ begin
   // Close unchanged & unplaying template song
   CloseTemplateModule;
 
+  InitLeft := 0; // anti warning
+
   for i := 0 to 2 do
   begin
 
@@ -2995,6 +2997,7 @@ function TMainForm.GetFirstModule(CW:TMDIChild):TMDIChild;
 var
   xl,xlb:Integer;
 begin
+  Result := nil; // anti warning
   xl:=CW.Left;
   xlb:=0;
   if CW.TSWindow[0]<>nil then
@@ -5781,6 +5784,7 @@ const
   NoteOff =128;
 
 begin
+  eve := nil; // anti warning
   count := midiin1.MessageCount;
 
   if count = 0 then Exit;

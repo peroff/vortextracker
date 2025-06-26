@@ -10894,6 +10894,7 @@ begin
   BaseNote        := VTMP.Patterns[-1].Items[0].Channel[0].Note;
   OrnamentLine    := Ornaments.CurrentLine;
   SrcOrnamentNum  := 0;
+  SrcOrnament     := nil;
   SrcOrnamentLine := 0;
   TrackSpeed      := 0;
   Pattern         := TracksCopy.Pattern;
@@ -12987,7 +12988,7 @@ var
     // Check for incorrect sample length
     if Result then
       for j := Low(VTMP.Samples) to High(VTMP.Samples) do
-        if (VTMP.Samples[j] <> nil) and ((VTMP.Samples[j].Length < 0) or (VTMP.Samples[j].Length > MaxSamLen)) then begin
+        if (VTMP.Samples[j] <> nil) and ({(VTMP.Samples[j].Length < 0) or} (VTMP.Samples[j].Length > MaxSamLen)) then begin
           Result := False;
           msg:='Incorrect sample['+inttostr(j)+'] length: '+inttostr(VTMP.Samples[j].Length);
           Break;
