@@ -4029,7 +4029,7 @@ end;
 
 procedure TMDIChild.RecalcSampOrnUsage;
 var
-  i, j, k, d, p: integer;
+  i, j, k, {d,} p: integer;
 begin
   for i:=0 to 31 do
   begin
@@ -8106,7 +8106,7 @@ type
     if Tracks.CursorX >= 22 then ChanNum := ChanAlloc[1] else
     if Tracks.CursorX >= 8  then ChanNum := ChanAlloc[0]
     else begin
-      ChanNum := -1;
+      // ChanNum := -1;
       exit;
     end;
     ifSolo := CheckSolo;
@@ -14337,10 +14337,10 @@ end;
 
 procedure TMDIChild.SetStringGrid2Scroll(ACol: Integer);
 var
-  ScrollPos, ColPos, VisibleArea, SelRows, VisibleColCount: Integer;
+  ScrollPos, ColPos, VisibleArea{, SelRows, VisibleColCount}: Integer;
 begin
-  VisibleColCount := SampleScrollBox.ClientWidth div (StringGrid2.DefaultColWidth+StringGrid2.GridLineWidth);
-  SelRows := StringGrid2.Selection.Right - StringGrid2.Selection.Left + 1;
+  // VisibleColCount := SampleScrollBox.ClientWidth div (StringGrid2.DefaultColWidth+StringGrid2.GridLineWidth);
+  // SelRows := StringGrid2.Selection.Right - StringGrid2.Selection.Left + 1;
 
   ScrollPos := SampleScrollBox.HorzScrollBar.Position;
   ColPos := ACol * (StringGrid2.DefaultColWidth+StringGrid2.GridLineWidth);
@@ -14355,10 +14355,10 @@ end;
 
 procedure TMDIChild.SetStringGrid3Scroll(ACol: Integer);
 var
-  ScrollPos, ColPos, VisibleArea, SelRows, VisibleColCount: Integer;
+  ScrollPos, ColPos, VisibleArea{, SelRows, VisibleColCount}: Integer;
 begin
-  VisibleColCount := OrnamentScrollBox.ClientWidth div (StringGrid3.DefaultColWidth+StringGrid3.GridLineWidth);
-  SelRows := StringGrid3.Selection.Right - StringGrid3.Selection.Left + 1;
+  // VisibleColCount := OrnamentScrollBox.ClientWidth div (StringGrid3.DefaultColWidth+StringGrid3.GridLineWidth);
+  // SelRows := StringGrid3.Selection.Right - StringGrid3.Selection.Left + 1;
 
   ScrollPos := OrnamentScrollBox.HorzScrollBar.Position;
   ColPos := ACol * (StringGrid3.DefaultColWidth+StringGrid3.GridLineWidth);
@@ -18983,7 +18983,6 @@ var
   Note: ShortInt;
   Lines, ChanLines: TStrings;
   ChannelLine: PChannelLine;
-  ModType: String;
   ColOffset, ColOffsetLeft, XOffset:Integer;
 
 begin
@@ -21654,7 +21653,7 @@ end;
 
 procedure TMDIChild.CleanPatterns;
 var
-  i, j, k, SelectLeft, SelectRight, PN: Integer;
+  i, j, {k,} SelectLeft, SelectRight, PN: Integer;
   pats:array[0..255] of integer;
   uniq:boolean;
   patcnt:integer;
@@ -23715,7 +23714,7 @@ begin
     nx:=(MaxX- (26-1)) div 2;
 
     yy:=0;
-    Tail:=False;
+    // Tail:=False;
     mx:=nx+x1+10;
     if (Orn<>nil) and ((Orn.Length>1) or (Orn.Items[0]<>0)) then //non empty
       for y := 0 to (maxyy-2) div 2 do
@@ -23747,14 +23746,14 @@ begin
           if yy=Orn.Length then
           begin
             yy:=Orn.Loop;
-            Tail:=True;
+            // Tail:=True;
           end;
         end
         else
           if yy=1 then
           begin
             yy:=0;
-            Tail:=True;
+            // Tail:=True;
           end;
       end;
 
@@ -24127,7 +24126,7 @@ procedure TMDIChild.AutoLLMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 var
   pf: TPoint;
-  xx1,yy1,o1,o2: Integer;
+  // xx1,yy1,o1,o2: Integer;
 begin
   if (Button = mbLeft) then
   begin

@@ -239,7 +239,7 @@ var
   EmptyLineCounter, Line, i: Integer;
   LineIsEmpty: Boolean;
   BlockNum: Integer;
-  SrcBlock, DestBlock: PPatternBlock;
+  SrcBlock{, DestBlock}: PPatternBlock;
 begin
 
   BlockNum := 0;
@@ -303,7 +303,7 @@ begin
   BlockNum := 0;
   repeat
     SrcBlock := @SrcBlocks[BlockNum];
-    DestBlock := @DestBlocks[BlockNum];
+    // DestBlock := @DestBlocks[BlockNum];
 
     CalculateBlockSpeed(BlockNum);
     Line := SrcBlock.StartLine;

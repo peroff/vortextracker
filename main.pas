@@ -3012,7 +3012,7 @@ begin
   begin
     if CW.TSWindow[1].Left<xl then
     begin
-      xl:=CW.TSWindow[1].Left;
+      // xl:=CW.TSWindow[1].Left;
       xlb:=2;
     end;
   end;
@@ -7357,8 +7357,8 @@ end;
 
 procedure TMainForm.JoinTracksUpdate(Sender: TObject);
 var
-  i, count: Integer;
-  Active: Boolean;
+  i {, count}: Integer;
+  // Active: Boolean;
   s1,s2:string;
 begin
   if (MDIChildCount <= 1) or (ExportStarted) then
