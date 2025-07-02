@@ -1,4 +1,4 @@
-Ôªøunit regexpr;
+unit regexpr;
 
 {
   TRegExpr class library
@@ -235,8 +235,8 @@ type
        // Case-insensitive.
     R: Boolean;
        // Extended syntax for Russian ranges in [].
-       // If True, then –∞-—è additionally includes letter '—ë',
-       // –ê-–Ø additionally includes '–Å', and –∞-–Ø includes all Russian letters.
+       // If True, then ‡-ˇ additionally includes letter '∏',
+       // ¿-ﬂ additionally includes '®', and ‡-ﬂ includes all Russian letters.
        // Turn it off if it interferes with your national alphabet.
     S: Boolean;
        // Dot '.' matches any char, otherwise only [^\n].
@@ -2539,7 +2539,7 @@ begin
     // shr after subtraction to calculate widechar distance %-( )
     // so, if difference is negative we have .. the "feature" :(
     // I could wrap it in $IFDEF UnicodeRE, but I didn't because
-    // "P ‚Äì Q computes the difference between the address given
+    // "P ñ Q computes the difference between the address given
     // by P (the higher address) and the address given by Q (the
     // lower address)" - Delphi help quotation.
   else
@@ -2814,15 +2814,15 @@ const
   FLAG_NOT_QUANTIFIABLE = 64; // "Piece" (ParsePiece) is look-around
 
   {$IFDEF UnicodeRE}
-  RusRangeLoLow = #$430; // '–∞'
-  RusRangeLoHigh = #$44F; // '—è'
-  RusRangeHiLow = #$410; // '–ê'
-  RusRangeHiHigh = #$42F; // '–Ø'
+  RusRangeLoLow = #$430; // '‡'
+  RusRangeLoHigh = #$44F; // 'ˇ'
+  RusRangeHiLow = #$410; // '¿'
+  RusRangeHiHigh = #$42F; // 'ﬂ'
   {$ELSE}
-  RusRangeLoLow = #$E0; // '–∞' in cp1251
-  RusRangeLoHigh = #$FF; // '—è' in cp1251
-  RusRangeHiLow = #$C0; // '–ê' in cp1251
-  RusRangeHiHigh = #$DF; // '–Ø' in cp1251
+  RusRangeLoLow = #$E0; // '‡' in cp1251
+  RusRangeLoHigh = #$FF; // 'ˇ' in cp1251
+  RusRangeHiLow = #$C0; // '¿' in cp1251
+  RusRangeHiHigh = #$DF; // 'ﬂ' in cp1251
   {$ENDIF}
 
 function TRegExpr.FindInCharClass(ABuffer: PRegExprChar; AChar: REChar): Boolean;
