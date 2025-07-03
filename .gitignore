@@ -21,9 +21,11 @@ buildts.inc
 *.projdata
 *.tvsconfig
 *.dsk
+*.stat
 
 # Delphi history and backups
 __history/
 __recovery/
 *.~*
 *.2007
+*.otares
