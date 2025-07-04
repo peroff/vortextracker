@@ -11,8 +11,6 @@ FastMM*
 *.orig
 *.dcu
 gpprof*
-buildname.txt
-buildts.inc
 *.ddp
 
 # Delphi local files (user-specific info)
@@ -29,3 +27,10 @@ __recovery/
 *.~*
 *.2007
 *.otares
+
+# Project specific
+buildname.txt
+buildts.inc
+VT.res
+Delphi-Midi-Component/Package/MidiComponents2010.res
+
