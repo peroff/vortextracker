@@ -70,7 +70,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure UpDown6_7ChangingEx(Sender: TObject; var AllowChange: Boolean;
-      NewValue: Smallint; Direction: TUpDownDirection);
+      NewValue: Integer; Direction: TUpDownDirection);
     procedure Edit6_7KeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure Edit6_7KeyPress(Sender: TObject; var Key: Char);
@@ -249,7 +249,7 @@ begin
 end;
 
 procedure TTrMng.UpDown6_7ChangingEx(Sender: TObject;
-  var AllowChange: Boolean; NewValue: Smallint;
+  var AllowChange: Boolean; NewValue: Integer;
   Direction: TUpDownDirection);
 begin
   AllowChange := NewValue in [0..2];
