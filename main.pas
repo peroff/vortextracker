@@ -763,7 +763,7 @@ var
 
   SamplesQuickDir, OrnamentsQuickDir: String;
 
-  DialogWinHandle: ^integer;
+  ActiveDialog: TCommonDialog;
   CenterWinHandle: integer;
 
   {$IFDEF LOGGER}Logger: TLogger;{$ENDIF}
@@ -1999,7 +1999,7 @@ begin
   end;
 
   CenterWinHandle := MainForm.handle;
-  DialogWinHandle := @OpenDialog.Handle;
+  ActiveDialog := OpenDialog;
   CenteringTimer.Enabled := True;
 
   if OpenDialog.Execute then
@@ -2207,7 +2207,7 @@ begin
   ToolBar2.DoubleBuffered := True;
   TrackBar1.DoubleBuffered := True;
   PrevTop := 0;
-  DialogWinHandle := nil;
+  ActiveDialog := nil;
   CenterWinHandle := 0;
 
 
@@ -7755,8 +7755,8 @@ var
   NewLeft, NewTop: integer;
   DialogHandle: integer;
 begin
-  if DialogWinHandle = nil then exit;
-  DialogHandle := getparent(DialogWinHandle^);
+  if ActiveDialog = nil then exit;
+  DialogHandle := getparent(ActiveDialog.Handle);
 
   if (DialogHandle <> 0) and IsWindowVisible(DialogHandle) then begin
     GetWindowRect(CenterWinHandle, FormRect);
@@ -7771,7 +7771,7 @@ begin
 
     SetWindowPos(DialogHandle, 0, NewLeft, NewTop, 0, 0, swp_NoSize);
     CenteringTimer.Enabled := False;
-    DialogWinHandle := nil;
+    ActiveDialog := nil;
   end;
 end;
 

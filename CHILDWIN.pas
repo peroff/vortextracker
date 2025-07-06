@@ -17820,7 +17820,7 @@ begin
   SaveTextDlg.InitialDir := OrnamentsDir;
 
   CenterWinHandle := self.handle;
-  DialogWinHandle := @SaveTextDlg.Handle;
+  ActiveDialog := SaveTextDlg;
   MainForm.CenteringTimer.Enabled := True;
 
   if SaveTextDlg.Execute then
@@ -17842,7 +17842,7 @@ begin
   LoadTextDlg.InitialDir := OrnamentsDir;
 
   CenterWinHandle := self.handle;
-  DialogWinHandle := @LoadTextDlg.Handle;
+  ActiveDialog := LoadTextDlg;
   MainForm.CenteringTimer.Enabled := True;
 
   if LoadTextDlg.Execute then
@@ -18087,7 +18087,7 @@ begin
   SaveTextDlg.InitialDir := SamplesDir;
 
   CenterWinHandle := self.handle;
-  DialogWinHandle := @SaveTextDlg.Handle;
+  ActiveDialog := SaveTextDlg;
   MainForm.CenteringTimer.Enabled := True;
 
   if SaveTextDlg.Execute then
@@ -18109,7 +18109,7 @@ begin
   LoadTextDlg.InitialDir := SamplesDir;
 
   CenterWinHandle := self.handle;
-  DialogWinHandle := @LoadTextDlg.Handle;
+  ActiveDialog := LoadTextDlg;
   MainForm.CenteringTimer.Enabled := True;
 
   if LoadTextDlg.Execute then
@@ -18193,7 +18193,7 @@ begin
   LoadTextDlg.DefaultExt := 'vtp';
 
   CenterWinHandle := self.handle;
-  DialogWinHandle := @LoadTextDlg.Handle;
+  ActiveDialog := LoadTextDlg;
   MainForm.CenteringTimer.Enabled := True;
 
   if LoadTextDlg.Execute then
@@ -18271,7 +18271,7 @@ begin
 
 
   CenterWinHandle := self.handle;
-  DialogWinHandle := @SaveTextDlg.Handle;
+  ActiveDialog := SaveTextDlg;
   MainForm.CenteringTimer.Enabled := True;
 
   if SaveTextDlg.Execute then
@@ -20860,7 +20860,7 @@ begin
 
 
     CenterWinHandle := self.handle;
-    DialogWinHandle := @SaveDialog1.Handle;
+    ActiveDialog := SaveDialog1;
     MainForm.CenteringTimer.Enabled := True;
 
     Result := False;
@@ -22135,7 +22135,7 @@ begin
     PrepareExportDialog(ExportWavDialog, '.wav', ExportPath);
 
     CenterWinHandle := self.handle;
-    DialogWinHandle := @ExportWavDialog.Handle;
+    ActiveDialog := ExportWavDialog;
     MainForm.CenteringTimer.Enabled := True;
 
     if ExportWavDialog.Execute then
@@ -22467,7 +22467,7 @@ begin
   PrepareExportDialog(ExportPSGDlg, '.psg');
 
   CenterWinHandle := self.handle;
-  DialogWinHandle := @ExportPSGDlg.Handle;
+  ActiveDialog := ExportPSGDlg;
   MainForm.CenteringTimer.Enabled := True;
 
   if ExportPSGDlg.Execute then
