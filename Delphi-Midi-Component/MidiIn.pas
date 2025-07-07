@@ -144,7 +144,7 @@ unit MidiIn;
 interface
 
 uses
-  Classes, SysUtils, Messages, Windows,
+  Classes, SysUtils, Messages, Windows, AnsiStrings,
 
   MMSystem,
   MidiDefs, MidiType, MidiCons, CircBuf, MidiCallback;
@@ -656,7 +656,7 @@ begin
         begin
 					{ Put a copy of the sysex buffer in the object }
 					GetMem(Result.Sysex, Sysex^.dwBytesRecorded);
-					StrMove(Result.Sysex, Sysex^.lpData, Sysex^.dwBytesRecorded);
+					AnsiStrings.StrMove(Result.Sysex, Sysex^.lpData, Sysex^.dwBytesRecorded);
           { If you don't zero this out some MIDI drivers append new data to the old data }
           Sysex^.dwBytesRecorded := 0;
         end;

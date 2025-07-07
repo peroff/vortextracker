@@ -20,7 +20,7 @@ uses
   Windows, Messages, Types, Classes, Graphics, Forms, Controls, StdCtrls, Menus,
   SysUtils, trfuncs, ComCtrls, WaveOutAPI, Grids, AY, Buttons, ExtCtrls, Dialogs,
   Math, ColorThemes, ExportWavOpts, StrUtils, RegExpr, RichEdit, ShellApi,
-  {ExceptionLog,} dpMemBmp, VKeys, ShlObj, HotKeys;
+  {ExceptionLog,} dpMemBmp, VKeys, ShlObj, HotKeys, AnsiStrings;
 
 
 const
@@ -19564,7 +19564,7 @@ procedure TTracks.PasteFromClipboard(Merge: Boolean);
     TmpStr: AnsiString;
   begin
     Result := False;
-    ps := StrScan(lps, #13);
+    ps := AnsiStrings.StrScan(lps, #13);
     if ps = nil then
       exit;
     l := Integer(ps) - Integer(lps);
@@ -19630,7 +19630,7 @@ begin
   end;
 
   re.Free;
-  sz := StrLen(lps);
+  sz := AnsiStrings.StrLen(lps);
   if not GetStr(lps, s) then
     exit;
   if (s + #13#10) <> ClipHdrPat then
