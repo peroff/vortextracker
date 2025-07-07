@@ -15,7 +15,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  ComCtrls, StdCtrls, Buttons;
+  ComCtrls, StdCtrls, Buttons, System.UITypes;
 
 type
   TTrMng = class(TForm)

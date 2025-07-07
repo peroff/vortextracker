@@ -15,7 +15,7 @@ unit WaveOutAPI;
 interface
 
 uses Windows, Messages, Dialogs, MMSystem, SysUtils, Forms, trfuncs, Classes,
-     ExportWav, ayumi;
+     ExportWav, ayumi, System.UITypes;
 
 type
 //Digital sound data buffer
@@ -300,7 +300,11 @@ begin
                   ReleaseMutex(ResetMutex);
                   AudioProblem := True;
                   WOCheck(waveOutClose(HWO));
-                  Result := 0;
+                  // Result := 0;
+
+                  // ! POTENTIAL BUG !
+                  // Exit() will jump to the next 'finally' section, not to the
+                  // end of the function.
                   Exit;
                 end;
 

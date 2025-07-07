@@ -16,7 +16,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ComCtrls;
+  StdCtrls, ComCtrls, System.UITypes;
 
 type
   TGlbTrans = class(TForm)

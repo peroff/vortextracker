@@ -17,7 +17,8 @@ interface
 uses
   Windows, Messages, SysUtils, StrUtils, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ComCtrls, ExtCtrls, Buttons, Menus, HotKeys,
-  trfuncs, ColorThemes, HSL_ColorPickerDlgUnit, ColorPickerDlgUnit;
+  trfuncs, ColorThemes, HSL_ColorPickerDlgUnit, ColorPickerDlgUnit,
+  System.UITypes;
 
 type
 

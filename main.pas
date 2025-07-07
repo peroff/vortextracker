@@ -21,7 +21,7 @@ uses Windows, SysUtils, Classes, Graphics, Forms, Controls, Menus,
   StdCtrls, Dialogs, Buttons, Messages, ExtCtrls, ComCtrls, StdActns,
   ActnList, ToolWin, ImgList, AY, WaveOutAPI, trfuncs, grids, ChildWin,
   MidiType, MidiIn, ColorThemes, ShellAPI, inifiles, RegExpr, System.ImageList,
-  System.Actions{$IFDEF LOGGER}, Logger {$ENDIF};
+  System.Actions, System.UITypes{$IFDEF LOGGER}, Logger {$ENDIF};
 
 const
   UM_REDRAWTRACKS   = WM_USER + 1;
@@ -5785,7 +5785,6 @@ const
   NoteOff =128;
 
 begin
-  eve := nil; // anti warning
   count := midiin1.MessageCount;
 
   if count = 0 then Exit;

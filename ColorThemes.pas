@@ -10,7 +10,8 @@ unit ColorThemes;
 
 interface
 
-uses Classes, SysUtils, inifiles, Dialogs, Controls, Graphics, HotKeys, Windows;
+uses Classes, SysUtils, inifiles, Dialogs, Controls, Graphics, HotKeys, Windows,
+     System.UITypes;
 
 type
   PRGBColor = ^TRGBColor;

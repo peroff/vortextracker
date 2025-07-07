@@ -20,7 +20,7 @@ uses
   Windows, Messages, Types, Classes, Graphics, Forms, Controls, StdCtrls, Menus,
   SysUtils, trfuncs, ComCtrls, WaveOutAPI, Grids, AY, Buttons, ExtCtrls, Dialogs,
   Math, ColorThemes, ExportWavOpts, StrUtils, RegExpr, RichEdit, ShellApi,
-  {ExceptionLog,} dpMemBmp, VKeys, ShlObj, HotKeys, AnsiStrings;
+  {ExceptionLog,} dpMemBmp, VKeys, ShlObj, HotKeys, AnsiStrings, System.UITypes;
 
 
 const
