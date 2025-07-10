@@ -3337,6 +3337,9 @@ begin
     // ------- OPTIONS TAB --------
     TrackOptsScrollBox.Width := OptTab.Width;
 
+    TrackChipFreq.HandleNeeded;
+    TrackIntSel.HandleNeeded;
+
     TrackChipFreq.Width := TrackOptsScrollBox.ClientWidth - TrackChipFreq.Left - VScrollbarSize - 3;
     TrackIntSel.Width := TrackOptsScrollBox.ClientWidth - TrackIntSel.Left - VScrollbarSize - 3;
 
