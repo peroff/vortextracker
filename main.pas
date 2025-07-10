@@ -7756,7 +7756,7 @@ var
   DialogHandle: integer;
 begin
   if ActiveDialog = nil then exit;
-  DialogHandle := getparent(ActiveDialog.Handle);
+  DialogHandle := ActiveDialog.Handle;
 
   if (DialogHandle <> 0) and IsWindowVisible(DialogHandle) then begin
     GetWindowRect(CenterWinHandle, FormRect);
