@@ -1,12 +1,12 @@
 object Form1: TForm1
   Left = 536
   Top = 188
-  Width = 550
-  Height = 614
   HorzScrollBar.Tracking = True
   VertScrollBar.Tracking = True
   BorderIcons = [biSystemMenu]
   Caption = 'Options'
+  ClientHeight = 575
+  ClientWidth = 534
   Color = clBtnFace
   Constraints.MinHeight = 380
   Constraints.MinWidth = 550
@@ -26,7 +26,7 @@ object Form1: TForm1
   object OpsPages: TPageControl
     Left = 0
     Top = 0
-    Width = 542
+    Width = 534
     Height = 545
     ActivePage = ColorThemesTab
     Align = alTop
@@ -40,6 +40,10 @@ object Form1: TForm1
     object CurWinds: TTabSheet
       Caption = 'Main'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object PatEditorOpts: TGroupBox
         Left = 0
         Top = 8
@@ -125,7 +129,6 @@ object Form1: TForm1
           Width = 145
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
           TabOrder = 7
           OnChange = ExtTrackerOptChange
           Items.Strings = (
@@ -242,7 +245,6 @@ object Form1: TForm1
           Width = 221
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
           TabOrder = 0
           OnChange = StartsActionChange
           Items.Strings = (
@@ -1212,7 +1214,6 @@ object Form1: TForm1
           Width = 113
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
           ItemIndex = 0
           TabOrder = 0
           Text = 'Default'
@@ -1349,6 +1350,10 @@ object Form1: TForm1
     object AYEmu: TTabSheet
       Caption = 'Chip emulation'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label7: TLabel
         Left = 16
         Top = 501
@@ -1706,39 +1711,16 @@ object Form1: TForm1
     object WOAPITAB: TTabSheet
       Caption = 'Audio'
       ImageIndex = 4
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object SpeedButton1: TSpeedButton
         Left = 464
         Top = 376
         Width = 55
         Height = 25
         Action = MainForm.Stop
-        Glyph.Data = {
-          36030000424D3603000000000000360000002800000010000000100000000100
-          1800000000000003000000000000000000000000000000000000FF00FFFF00FF
-          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
-          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-          00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
-          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-          00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-          FF00FFFF00FFFF00FF000000000000000000000000000000000000000000FF00
-          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF00000000000000
-          0000000000000000000000000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-          FF00FFFF00FFFF00FF000000000000000000000000000000000000000000FF00
-          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF00000000000000
-          0000000000000000000000000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-          FF00FFFF00FFFF00FF000000000000000000000000000000000000000000FF00
-          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF00000000000000
-          0000000000000000000000000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-          FF00FFFF00FFFF00FF000000000000000000000000000000000000000000FF00
-          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF00000000000000
-          0000000000000000000000000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
-          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-          00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
-          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-          00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
         Margin = 2
       end
       object grp1: TGroupBox
@@ -1956,7 +1938,6 @@ object Form1: TForm1
           Width = 217
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
           TabOrder = 1
           Visible = False
           OnChange = ComboBox1Change
@@ -1966,6 +1947,10 @@ object Form1: TForm1
     object HotKeys: TTabSheet
       Caption = 'HotKeys'
       ImageIndex = 6
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GroupBox2: TGroupBox
         Left = 0
         Top = 8
@@ -2018,6 +2003,10 @@ object Form1: TForm1
     object OpMod: TTabSheet
       Caption = 'Compatibility'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object SaveHead: TRadioGroup
         Left = 0
         Top = 264
@@ -2076,8 +2065,9 @@ object Form1: TForm1
           ColumnClick = False
           GridLines = True
           HotTrack = True
-          Items.Data = {
-            200000000100000000000000FFFFFFFFFFFFFFFF000000000000000003567433}
+          Items.ItemData = {
+            05200000000100000000000000FFFFFFFFFFFFFFFF00000000FFFFFFFF000000
+            0003560074003300}
           ReadOnly = True
           RowSelect = True
           TabOrder = 2
