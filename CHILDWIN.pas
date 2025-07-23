@@ -940,7 +940,7 @@ type
     procedure ChangeHLStep(NewStep: Integer);
     procedure UpDown15Click(Sender: TObject; Button: TUDBtnType);
     procedure SetLoopPos(lp: Integer);
-    procedure AddUndo(CA: TChangeAction; par1, par2: Integer);
+    procedure AddUndo(CA: TChangeAction; par1, par2: NativeInt);
     procedure DoUndo(Steps: Integer; Undo: Boolean);
     function SaveModuleAs: Boolean;
     procedure SaveModule;
@@ -3775,7 +3775,7 @@ begin
   case TMessage(Message).msg of
     WM_GETDLGCODE:
       begin
-        TMessage(Message).Result := -1 xor Integer(DLGC_WANTTAB);
+        TMessage(Message).Result := -1 xor LRESULT(DLGC_WANTTAB);
         exit
       end;
     WM_PAINT:
@@ -3820,7 +3820,7 @@ begin
   case TMessage(Message).msg of
     WM_GETDLGCODE:
       begin
-        TMessage(Message).Result := -1 xor Integer(DLGC_WANTTAB);
+        TMessage(Message).Result := -1 xor LRESULT(DLGC_WANTTAB);
         exit
       end;
     WM_PAINT:
@@ -3993,7 +3993,7 @@ begin
   case TMessage(Message).msg of
     WM_GETDLGCODE:
       begin
-        TMessage(Message).Result := -1 xor Integer(DLGC_WANTTAB);
+        TMessage(Message).Result := -1 xor LRESULT(DLGC_WANTTAB);
         exit
       end;
     WM_PAINT:
@@ -4080,7 +4080,7 @@ begin
   case TMessage(Message).msg of
     WM_GETDLGCODE:
       begin
-        TMessage(Message).Result := -1 xor Integer(DLGC_WANTTAB);
+        TMessage(Message).Result := -1 xor LRESULT(DLGC_WANTTAB);
         exit
       end;
     WM_PAINT:
@@ -9920,7 +9920,7 @@ var
       ValidateSample2(SamNum);
       New(ST);
       ST^ := ShownSample.Items[i];
-      AddUndo(CAChangeSampleValue, Integer(ST), i);
+      AddUndo(CAChangeSampleValue, NativeInt(ST), i);
       with ShownSample.Items[i] do
         case n of
           NmTone:
@@ -16117,7 +16117,7 @@ begin
   SongChanged := True;
   BackupSongChanged := True;
   s := Edit3.Text;
-  AddUndo(CAChangeTitle, Integer(PChar(VTMP.Title)), Integer(PChar(s)));
+  AddUndo(CAChangeTitle, NativeInt(PChar(VTMP.Title)), NativeInt(PChar(s)));
   VTMP.Title := s
 end;
 
@@ -16131,7 +16131,7 @@ begin
   SongChanged := True;
   BackupSongChanged := True;
   s := Edit4.Text;
-  AddUndo(CAChangeAuthor, Integer(PChar(VTMP.Author)), Integer(PChar(s)));
+  AddUndo(CAChangeAuthor, NativeInt(PChar(VTMP.Author)), NativeInt(PChar(s)));
   VTMP.Author := s;
 end;
 
@@ -16783,7 +16783,7 @@ begin
 
   SongChanged := True;
   BackupSongChanged := True;
-  AddUndo(CAChangeHeader, Integer(not VTMP.VortexModule_Header), SaveHead.ItemIndex);
+  AddUndo(CAChangeHeader, NativeInt(not VTMP.VortexModule_Header), SaveHead.ItemIndex);
   VTMP.VortexModule_Header := not Boolean(SaveHead.ItemIndex);
 
   if BlockRecursion then Exit;
@@ -17459,7 +17459,7 @@ begin
     ValidateSample2(SamNum);
     New(ST);
     ST^ := ShownSample.Items[i];
-    AddUndo(CAChangeSampleValue, Integer(ST), i);
+    AddUndo(CAChangeSampleValue, NativeInt(ST), i);
     ShownSample.Items[i] :=
       MainForm.SampleLineTemplates[MainForm.CurrentSampleLineTemplate];
     if Focused then
@@ -19521,7 +19521,7 @@ begin
           l := TracksCursorXLeft;
         for l := X2 + l to 48 do
           s[l + TracksCursorXLeft + 1] := #32;
-        Move(s[4], pointer(Integer(lptstrCopy) + ps)^, 51 + Ord(i = Y2));
+        Move(s[4], pointer(NativeInt(lptstrCopy) + ps)^, 51 + Ord(i = Y2));
         inc(ps, 51)
       end
     finally
@@ -19563,14 +19563,14 @@ procedure TTracks.PasteFromClipboard(Merge: Boolean);
   function GetStr(lps: PAnsiChar; var s: string): Boolean;
   var
     ps: PAnsiChar;
-    l: Integer;
+    l: NativeInt;
     TmpStr: AnsiString;
   begin
     Result := False;
     ps := AnsiStrings.StrScan(lps, #13);
     if ps = nil then
       exit;
-    l := Integer(ps) - Integer(lps);
+    l := NativeInt(ps) - NativeInt(lps);
     SetLength(TmpStr, l);
     Move(lps^, TmpStr[1], l);
     s := string(TmpStr);
@@ -19580,12 +19580,13 @@ procedure TTracks.PasteFromClipboard(Merge: Boolean);
 var
   hglb: HGLOBAL;
   lps, ps: PAnsiChar;
-  X1, X2, Y1, Y2, sz, l, i, j, k, m, newe, newn, e: Integer;
+  X1, X2, Y1, Y2, i, j, k, m, newe, newn, e: Integer;
+  sz, l: NativeInt;
   newc: array[0..2] of TAdditionalCommand;
   s: string;
   nums: array[0..MaxPatLen - 1, 0..32] of Integer;
   re: TRegExpr;
-  
+
 begin
 
   if IsClipboardFormatAvailable(FamiClipboardType) then begin
@@ -19638,10 +19639,10 @@ begin
     exit;
   if (s + #13#10) <> ClipHdrPat then
     exit;
-  Integer(ps) := Integer(lps) + Length(s) + 2;
+  NativeInt(ps) := NativeInt(lps) + Length(s) + 2;
   FillChar(nums, SizeOf(nums), 255);
   l := 0;
-  while (Integer(ps) + 2 - Integer(lps) < sz) and (l < MaxPatLen) do
+  while (NativeInt(ps) + 2 - NativeInt(lps) < sz) and (l < MaxPatLen) do
   begin
     if not GetStr(ps, s) then
       exit;
@@ -19649,7 +19650,7 @@ begin
 //    if DecBaseLinesOn then
 //      s := copy(s, 2, Length(s));
 
-    inc(Integer(ps), Length(s) + 2);
+    inc(NativeInt(ps), Length(s) + 2);
     if Length(s) <> 49 then
       exit;
     for j := 0 to 3 do
@@ -20064,7 +20065,7 @@ begin
     SelectPosition2(lp)
 end;
 
-procedure TMDIChild.AddUndo(CA: TChangeAction; par1, par2: Integer);
+procedure TMDIChild.AddUndo(CA: TChangeAction; par1, par2: NativeInt);
 var
   i, CurLine, CurChannel: Integer;
 begin

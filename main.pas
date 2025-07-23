@@ -4739,13 +4739,13 @@ begin
       inc(sndhhdrsz);
       i := 0; BlockWrite(f, i, 1);
     end;
-    BlockWrite(f, pointer(integer(p) + 16)^, sndhplsz - 16);
+    BlockWrite(f, pointer(NativeInt(p) + 16)^, sndhplsz - 16);
     BlockWrite(f, PT3, Size);
   end;
-  dec(integer(p), 2);
+  dec(NativeInt(p), 2);
   for j := 0 to 2 do
   begin
-    inc(integer(p), 4);
+    inc(NativeInt(p), 4);
     i := IntelWord(IntelWord(p^) + sndhhdrsz);
     seek(f, 2 + j * 4); BlockWrite(f, i, 2);
   end;
@@ -4834,7 +4834,7 @@ begin
     i := FindResource(HInstance, 'ZXTSPLAYER', 'ZXTS');
   p := LockResource(LoadResource(HInstance, i));
   Move(p^, zxplsz, 2);
-  Inc(integer(p), 2);
+  Inc(NativeInt(p), 2);
   Move(p^, zxdtsz, 2);
   if ExpDlg.ShowModal <> mrOK then exit;
   if SaveDialogZXAY.InitialDir = '' then
@@ -4873,28 +4873,28 @@ begin
       Application.MessageBox('Size of module with player exceeds 65536 bytes.', 'Cannot export');
       exit;
     end;
-    Inc(integer(p), 2);
+    Inc(NativeInt(p), 2);
     SetLength(pl, zxplsz);
     Move(p^, pl[0], zxplsz);
-    Inc(integer(p), zxplsz);
+    Inc(NativeInt(p), zxplsz);
     while p^ < zxplsz - 1 do
     begin
       Inc(WordPtr(@pl[p^])^, ZXCompAddr);
-      Inc(integer(p), 2);
+      Inc(NativeInt(p), 2);
     end;
-    Inc(integer(p), 2);
+    Inc(NativeInt(p), 2);
     while p^ < zxplsz do
     begin
       Inc(BytePtr(@pl[p^])^, ZXCompAddr);
-      Inc(integer(p), 2);
+      Inc(NativeInt(p), 2);
     end;
-    Inc(integer(p), 2);
+    Inc(NativeInt(p), 2);
     while p^ < zxplsz do
     begin
       i := p^;
-      Inc(integer(p), 2);
+      Inc(NativeInt(p), 2);
       BytePtr(@pl[i])^ := (p^ + ZXCompAddr) shr 8;
-      Inc(integer(p), 2);
+      Inc(NativeInt(p), 2);
     end;
     if ExpDlg.LoopChk.Checked then pl[10] := pl[10] or 1;
   end;

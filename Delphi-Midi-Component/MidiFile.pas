@@ -584,7 +584,7 @@ begin
   GetMem(chunkData, chunkLength + 10);
   BlockRead(midiFile, chunkData^, chunkLength);
   chunkIndex := chunkData;
-  chunkEnd := PByte(integer(chunkIndex) + integer(chunkLength) - 1);
+  chunkEnd := PByte(NativeInt(chunkIndex) + NativeInt(chunkLength) - 1);
 end;
 
 procedure TMidifile.ReadChunk;
@@ -638,7 +638,7 @@ begin
     currentTrack := TMidiTrack.Create;
     currentTrack.OnMidiEvent := FOnMidiEvent;
     Tracks.add(currentTrack);
-    while integer(chunkIndex) < integer(chunkEnd) do
+    while NativeInt(chunkIndex) < NativeInt(chunkEnd) do
     begin
       // each event starts with var length delta time
       dTime := ReadVarLength;

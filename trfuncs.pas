@@ -5993,7 +5993,8 @@ end;
 
 procedure PrepareZXModule(ZXP: PSpeccyModule; var FType: Available_Types; Length: integer);
 var
-  i, j, k, i1, i2: integer;
+  i, j, k: Integer;
+  i1, i2: NativeInt;
   pwrd: WordPtr;
 begin
   case FType of
@@ -6049,17 +6050,17 @@ begin
         else
         begin
           pwrd := pointer(ZXP);
-          i1 := ZXP.FLS_SamplesPointer - i + integer(pwrd);
-          i2 := ZXP.FLS_PositionsPointer - i + integer(pwrd) + 2;
+          i1 := ZXP.FLS_SamplesPointer - i + NativeInt(pwrd);
+          i2 := ZXP.FLS_PositionsPointer - i + NativeInt(pwrd) + 2;
           repeat
             Dec(pwrd^, i);
-            Inc(integer(pwrd), 2)
-          until i1 = integer(pwrd);
-          Inc(integer(pwrd), 2);
+            Inc(NativeInt(pwrd), 2)
+          until i1 = NativeInt(pwrd);
+          Inc(NativeInt(pwrd), 2);
           repeat
             Dec(pwrd^, i);
-            Inc(integer(pwrd), 4)
-          until i2 = integer(pwrd)
+            Inc(NativeInt(pwrd), 4)
+          until i2 = NativeInt(pwrd)
         end
       end;
     SQTFile:
@@ -6083,7 +6084,7 @@ begin
         for k := 1 to (ZXP.SQT_PatternsPointer - i + j shl 1) div 2 do
         begin
           Dec(pwrd^, i);
-          Inc(integer(pwrd), 2)
+          Inc(NativeInt(pwrd), 2)
         end
       end
   end;
