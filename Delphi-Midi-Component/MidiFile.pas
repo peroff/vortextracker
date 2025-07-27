@@ -884,7 +884,7 @@ end;
 
 function  TMidiFIle.GetTrackLength:integer;
 var i,length : integer;
-    time : extended;
+    time : Double;
 begin
   length := 0;
   for i := 0 to Tracks.Count - 1 do
