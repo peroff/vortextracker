@@ -2565,7 +2565,6 @@ var
     Saved_EnvelopeAsNote: Boolean;
     Saved_DecBaseLinesOn: Boolean;
     Saved_DecBaseNoiseOn: Boolean;
-    Saved_TestForever: Boolean;
     Saved_HighlightSpeedOn: Boolean;
     Saved_DupNoteParams: Boolean;
     Saved_MoveBetweenPatrns: Boolean;
@@ -2584,12 +2583,10 @@ var
     Saved_DisableCtrlClick: Boolean;
     Saved_DisableInfoWin: Boolean;    
     Saved_ManualChipFreq: Integer;
-    Saved_ManualIntFreq: Integer;
     Saved_CenterOffset: Integer;
     Saved_PositionSize: Integer;
     Saved_DCType: Integer;
     Saved_DCCutOff: Integer;
-    i: integer;
     f: Double;
     ChanAllocChanged, PanoramChanged: Boolean;
     NewSize: TSize;

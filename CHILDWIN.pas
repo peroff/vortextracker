@@ -4421,7 +4421,7 @@ end;
 
 procedure TTracks.RedrawTracks(DC: HDC);
 var
-  Line, i, j, j1, n, i1, CurY, Top, ToLine, num: Integer;
+  Line, i, j, n, i1, CurY, Top, ToLine, num: Integer;
 
   PrevPat, NextPat: PPattern;
   PrevPatNum, NextPatNum,
@@ -4433,11 +4433,9 @@ var
 
   X, Y: Integer;
   DC1: HDC;
-  s, s1: string;
+  s: string;
   p: HFONT;
   PLen: Integer;
-  sz: tagSIZE;
-  PositionNumber: Integer;
 
   LLDown: Boolean;
   TemLen: Integer;
@@ -7488,7 +7486,7 @@ end;
 
 procedure TMDIChild.TracksKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 var
-  PLen, i, j: Integer;
+  PLen, i: Integer;
   Incr, Decr: Boolean;
   procedure RemSel;
   begin
@@ -20294,8 +20292,7 @@ var
   OrnamentState: TChangeOrnament;
   TMPOtherMDI: TMDIChild;
   TMPi, TMPj, TMPund: Integer;
-  o1, o2: Integer;
-  
+
 begin
   UndoWorking := True;
   PatternsState := nil;
@@ -23456,11 +23453,11 @@ procedure TMDIChild.StringGrid2DrawCell(Sender: TObject; ACol,
   ARow: Integer; RRect: TRect; State: TGridDrawState);
 var
   SavedAlign: word;
-  FontColor, PrevColor: TColor;
+  FontColor: TColor;
   PosNumberX, PosNumberY: Integer;
   S: string;
   MasterVol,MasterTon:integer;
-  MaxX,MaxYY,MaxY,I,X,Y,x1,y1,nx,yy,mt: Integer;
+  MaxX,MaxYY,MaxY,X,Y,x1,y1,nx,yy,mt: Integer;
   Samp:PSample;
   Tail:Boolean;
   rect1,rect2,rect_orig:TRect;
@@ -23622,14 +23619,13 @@ procedure TMDIChild.StringGrid3DrawCell(Sender: TObject; ACol,
   ARow: Integer; RRect: TRect; State: TGridDrawState);
 var
   SavedAlign: word;
-  FontColor, PrevColor: TColor;
+  FontColor: TColor;
   PosNumberX, PosNumberY: Integer;
   S: string;
-  MaxX,MaxYY,MaxY,I,X,Y,x1,y1,nx,yy,mt: Integer;
+  MaxX,MaxYY,MaxY,X,Y,x1,y1,nx,yy: Integer;
   Orn:POrnament;
   note:integer;
   oct:integer;
-  Tail:Boolean;
   rect1,rect2,rect_orig:TRect;
   mx:integer;
   pal:integer;

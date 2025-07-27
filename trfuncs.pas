@@ -7360,7 +7360,7 @@ var
   MaxInstr: integer;
 
   SkipFreqs: array[1..255] of integer;
-  i, j, k, l, ov, tmp, Tick, Delay, CurDelay, DelayCnt, SkipCounter, Pat, Line, Line2, MinSkip, MinChan, VPLen: integer;
+  i, j, k, ov, tmp, Tick, Delay, CurDelay, Pat, Line, Line2, MinSkip, VPLen: integer;
   VirtualPattern: array of record
     Noise: byte;
     Envelope: word;

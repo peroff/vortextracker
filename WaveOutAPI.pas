@@ -836,7 +836,7 @@ var
   Reseted_old: Boolean;
 
   TMPFileName: string;
-  ayumi0, ayumi1, ayumi2, ayumi3: TAyumi;
+  ayumi1, ayumi2, ayumi3: TAyumi;
   CurName, Names: string;
 
   CurChan: Integer;
