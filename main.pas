@@ -1305,7 +1305,12 @@ end;
 
 function IntelWord(a: word): word;
 asm
-xchg al,ah
+        {$IFDEF CPUX64}
+        mov     eax, ecx
+        xchg    al, ah
+        {$ELSE !CPUX64}
+        xchg    al, ah
+        {$ENDIF !CPUX64}
 end;
 
 

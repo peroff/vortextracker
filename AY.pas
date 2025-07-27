@@ -413,14 +413,25 @@ end;
 
 function NoiseGenerator(Seed: integer): integer;
 asm
- shld edx,eax,16
- shld ecx,eax,19
- xor ecx,edx
- and ecx,1
- add eax,eax
- and eax,$1ffff
- inc eax
- xor eax,ecx
+        {$IFDEF CPUX64}
+        shld    edx, ecx, 16
+        shld    eax, ecx, 19
+        xor     eax, edx
+        and     eax, 1
+        add     ecx, ecx
+        and     ecx, $1ffff
+        inc     ecx
+        xor     eax, ecx
+        {$ELSE !CPUX64}
+        shld    edx, eax, 16
+        shld    ecx, eax, 19
+        xor     ecx, edx
+        and     ecx, 1
+        add     eax, eax
+        and     eax, $1ffff
+        inc     eax
+        xor     eax, ecx
+        {$ENDIF !CPUX64}
 end;
 
 procedure TSoundChip.Synthesizer_Logic_Q;
@@ -557,42 +568,105 @@ end;
 
 //sorry for assembler, I can't make effective qword procedure on pascal...
 
+{ Pseudocode (by Dan):
+
+  Filt_X[Filt_I] = Lev
+  t: qword = Lev * Filt_K[0]
+
+  for k := 1 to Filt_M do
+  begin
+    Filt_I--
+    if Filt_I < 0 then
+      Filt_I = Filt_M
+    t += Filt_X[Filt_I] * Filt_K[k]
+  end;
+
+  if t < 0 then
+    t += 0FFFFFFh
+  Result = dword(t shr 24)
+}
+
 function ApplyFilter(Lev: integer; var Filt_X: TFilt_K): integer;
 asm
+        {$IFDEF CPUX64}
+        push    rbx
+        push    rsi
+        push    rdi
+
+        movsxd  rax, ecx            // rax = Lev
+        mov     ecx, Filt_M         // coefs number
+        mov     rdi, Filt_K         // rdi = Filt_K; k = 0
+        lea     rsi, rdi+rcx*4      // rsi = Filt_K last element
+
+        mov     rbx, [rdx]          // rbx = Filt_X
+        mov     ecx, Filt_I         // i = Filt_I
+        mov     [rbx+rcx*4], eax    // Filt_X[Filt_I] = Lev
+        movsxd  rdx, dword ptr [rdi]// rdx = Filt_K[0]
+        imul    rax, rdx            // rax = t = Lev * Filt_K[0]
+
+@lp:    dec     ecx                 // i--
+        jns     @gz                 // if i < 0 then i = Filt_M
+        mov     ecx, Filt_M
+@gz:    movsxd  rdx, dword ptr [rbx+rcx*4] // rdx = Filt_X[i]
+        add     rdi, 4              // k++
+        movsxd  r8, dword ptr [rdi] // r8 = Filt_K[k]
+        imul    rdx, r8             // Filt_X[i] * Filt_K[k]
+        add     rax, rdx            // t += Filt_X[i] * Filt_K[k]
+        cmp     rdi, rsi            // if k < Filt_M then goto @lp
+        jnz     @lp
+
+        mov     Filt_I, ecx         // Filt_I = i
+
+        test    rax, rax            // if t < 0 then t += 0FFFFFFh
+        jns     @nm
+        add     rax, 0FFFFFFh
+@nm:    shr     rax, 24             // Result = dword(t shr 24)
+
+        pop     rdi
+        pop     rsi
+        pop     rbx
+        {$ELSE !CPUX64}
         push    ebx
         push    esi
         push    edi
-        add     esp,-8
-        mov     ecx,Filt_M
-        mov     edi,Filt_K
-        lea     esi,edi+ecx*4
-        mov     ebx,[edx]
-        mov     ecx,Filt_I
-        mov     [ebx+ecx*4],eax
-        imul    dword ptr [edi]
-        mov     [esp],eax
-        mov     [esp+4],edx
-@lp:    dec     ecx
-        jns     @gz
-        mov     ecx,Filt_M
-@gz:    mov     eax,[ebx+ecx*4]
-        add     edi,4
-        imul    dword ptr [edi]
-        add     [esp],eax
-        adc     [esp+4],edx
-        cmp     edi,esi
+
+        add     esp, -8             // qword t
+        mov     ecx, Filt_M         // coefs number
+        mov     edi, Filt_K         // edi = Filt_K; k = 0
+        lea     esi, edi+ecx*4      // esi = Filt_K last element
+
+        mov     ebx, [edx]          // ebx = Filt_X
+        mov     ecx, Filt_I         // i = Filt_I
+        mov     [ebx+ecx*4], eax    // Filt_X[Filt_I] = Lev
+        imul    dword ptr [edi]     // * Filt_K[0]
+        mov     [esp], eax          // t (qword) = Lev * Filt_K[0]
+        mov     [esp+4], edx
+
+@lp:    dec     ecx                 // i--
+        jns     @gz                 // if i < 0 then i = Filt_M
+        mov     ecx, Filt_M
+@gz:    mov     eax, [ebx+ecx*4]    // Filt_X[i]
+        add     edi, 4              // k++
+        imul    dword ptr [edi]     // * Filt_K[k]
+        add     [esp], eax          // t += Filt_X[i] * Filt_K[k]
+        adc     [esp+4], edx
+        cmp     edi, esi            // if k < Filt_M then goto @lp
         jnz     @lp
-        mov     Filt_I,ecx
+
+        mov     Filt_I, ecx         // Filt_I = i
         pop     eax
-        pop     edx
+        pop     edx                 // edx:eax = t
+
         pop     edi
         pop     esi
         pop     ebx
-        test    edx,edx
+
+        test    edx, edx            // if t < 0 then t += 0FFFFFFh
         jns     @nm
-        add     eax,0FFFFFFh
-        adc     edx,0
-@nm:    shrd    eax,edx,24
+        add     eax, 0FFFFFFh
+        adc     edx, 0
+@nm:    shrd    eax, edx, 24        // Result = dword(t shr 24)
+        {$ENDIF !CPUX64}
 end;
 
 procedure TSoundChip.Synthesizer_Mixer_Q;
