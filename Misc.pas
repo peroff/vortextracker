@@ -43,7 +43,14 @@ end;
 
 function AnsiChr(C: Byte): Char;
 begin
-  Result := {$IFDEF UNICODE}WideChar(AnsiChar(C)){$ELSE}Chr(C){$ENDIF};
+{$IFDEF UNICODE}
+  { Simple casting WideChar(AnsiChar(C)) for some reason doesn't work correctly
+    in Delphi 10.3 (but works fine in D2009). A bug in the compiler? We work
+    around this by converting to a string. }
+  Result := string(AnsiChar(C))[1];
+{$ELSE}
+  Result := Chr(C);
+{$ENDIF}
 end;
 
 function AnsiCharArrToString(C: PAnsiChar; Len: Integer): string;
