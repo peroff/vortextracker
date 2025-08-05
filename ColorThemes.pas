@@ -1962,7 +1962,8 @@ var
   Part, Color: TStrings;
 
 begin
-
+  Part := nil;
+  Color := nil;
   if Trim(Str) = '' then Exit;
   try
     Part  := Split(AnsiChr(180), Str);
