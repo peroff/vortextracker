@@ -5169,7 +5169,6 @@ begin
     Pr := NORMAL_PRIORITY_CLASS;
   HMyProcess := GetCurrentProcess;
   SetPriorityClass(HMyProcess, Pr);
-  CloseHandle(HMyProcess);
 end;
 
 function CanCopy: boolean;
