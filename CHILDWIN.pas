@@ -152,8 +152,11 @@ type
     procedure ClearSelection;
     procedure DoHint;
     private
-      procedure WMEraseBkGnd(var Message:TMessage); message WM_ERASEBKGND;
+      procedure WMEraseBkGnd(var Message: TMessage); message WM_ERASEBKGND;
+      procedure WMPaint(var Message: TWMPaint); message WM_PAINT;
       procedure WMSysChar(var Message: TWMSysChar); message WM_SYSCHAR;
+    protected
+      procedure PaintWindow(DC: HDC); override;
   end;
 
   TTestLine = class(TWinControl)
@@ -185,7 +188,10 @@ type
     procedure TestLineKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure TestLineExit(Sender: TObject);
     private
+      procedure WMPaint(var Message: TWMPaint); message WM_PAINT;
       procedure WMSysChar(var Message: TWMSysChar); message WM_SYSCHAR;
+    protected
+      procedure PaintWindow(DC: HDC); override;
   end;
 
   TSamples = class(TWinControl)
@@ -224,8 +230,11 @@ type
     procedure CreateMyCaret;
     procedure DoHint(X, Y: Integer);
     private
-      procedure WMEraseBkGnd(var Message:TMessage); message WM_ERASEBKGND;
+      procedure WMEraseBkGnd(var Message: TMessage); message WM_ERASEBKGND;
+      procedure WMPaint(var Message: TWMPaint); message WM_PAINT;
       procedure WMSysChar(var Message: TWMSysChar); message WM_SYSCHAR;
+    protected
+      procedure PaintWindow(DC: HDC); override;
   end;
 
   TOrnaments = class(TWinControl)
@@ -270,8 +279,11 @@ type
     procedure RedrawOrnaments(DC: HDC);
     procedure DoHint;
     private
-      procedure WMEraseBkGnd(var Message:TMessage); message WM_ERASEBKGND;
+      procedure WMEraseBkGnd(var Message: TMessage); message WM_ERASEBKGND;
+      procedure WMPaint(var Message: TWMPaint); message WM_PAINT;
       procedure WMSysChar(var Message: TWMSysChar); message WM_SYSCHAR;
+    protected
+      procedure PaintWindow(DC: HDC); override;
   end;
 
 
@@ -3487,6 +3499,14 @@ begin
 end;
 
 
+procedure TTestLine.WMPaint(var Message: TWMPaint);
+begin
+  ControlState := ControlState + [csCustomPaint];
+  inherited;
+  ControlState := ControlState - [csCustomPaint];
+end;
+
+
 procedure TTestLine.WMSysChar(var Message: TWMSysChar);
 var MyMsg : TMsg ;
 begin
@@ -3768,22 +3788,12 @@ end;
 
 
 procedure TTracks.DefaultHandler(var Message);
-var
-  ps: tagPAINTSTRUCT;
-  hDC1: HDC;
 begin
   case TMessage(Message).msg of
     WM_GETDLGCODE:
       begin
         TMessage(Message).Result := -1 xor LRESULT(DLGC_WANTTAB);
         exit
-      end;
-    WM_PAINT:
-      begin
-        hDC1 := BeginPaint(Handle, ps);
-        RedrawTracks(hDC1);
-        EndPaint(Handle, ps);
-        TWMPaint(Message).Result := -1;
       end;
     WM_SETFOCUS:
       begin
@@ -3813,22 +3823,12 @@ begin
 end;
 
 procedure TTestLine.DefaultHandler(var Message);
-var
-  ps: tagPAINTSTRUCT;
-  hDC1: HDC;
 begin
   case TMessage(Message).msg of
     WM_GETDLGCODE:
       begin
         TMessage(Message).Result := -1 xor LRESULT(DLGC_WANTTAB);
         exit
-      end;
-    WM_PAINT:
-      begin
-        hDC1 := BeginPaint(Handle, ps);
-        RedrawTestLine(hDC1);
-        EndPaint(Handle, ps);
-        TWMPaint(Message).Result := -1
       end;
     WM_SETFOCUS:
       begin
@@ -3970,9 +3970,17 @@ begin
 end;
 
 
-procedure TSamples.WMEraseBkGnd(var Message:TMessage);
+procedure TSamples.WMEraseBkGnd(var Message: TMessage);
 begin
   Message.Result := 0;
+end;
+
+
+procedure TSamples.WMPaint(var Message: TWMPaint);
+begin
+  ControlState := ControlState + [csCustomPaint];
+  inherited;
+  ControlState := ControlState - [csCustomPaint];
 end;
 
 
@@ -3986,22 +3994,12 @@ begin
 end;
 
 procedure TSamples.DefaultHandler(var Message);
-var
-  ps: tagPAINTSTRUCT;
-  hDC1: HDC;
 begin
   case TMessage(Message).msg of
     WM_GETDLGCODE:
       begin
         TMessage(Message).Result := -1 xor LRESULT(DLGC_WANTTAB);
         exit
-      end;
-    WM_PAINT:
-      begin
-        hDC1 := BeginPaint(Handle, ps);
-        RedrawSamples(hDC1);
-        EndPaint(Handle, ps);
-        TWMPaint(Message).Result := -1
       end;
     WM_SETFOCUS:
       begin
@@ -4057,9 +4055,17 @@ begin
 end;
 
 
-procedure TOrnaments.WMEraseBkGnd(var Message:TMessage);
+procedure TOrnaments.WMEraseBkGnd(var Message: TMessage);
 begin
   Message.Result := 0;
+end;
+
+
+procedure TOrnaments.WMPaint(var Message: TWMPaint);
+begin
+  ControlState := ControlState + [csCustomPaint];
+  inherited;
+  ControlState := ControlState - [csCustomPaint];
 end;
 
 
@@ -4073,22 +4079,12 @@ begin
 end;
 
 procedure TOrnaments.DefaultHandler(var Message);
-var
-  ps: tagPAINTSTRUCT;
-  hDC1: HDC;
 begin
   case TMessage(Message).msg of
     WM_GETDLGCODE:
       begin
         TMessage(Message).Result := -1 xor LRESULT(DLGC_WANTTAB);
         exit
-      end;
-    WM_PAINT:
-      begin
-        hDC1 := BeginPaint(Handle, ps);
-        RedrawOrnaments(hDC1);
-        EndPaint(Handle, ps);
-        TWMPaint(Message).Result := -1
       end;
     WM_SETFOCUS:
       begin
@@ -4114,9 +4110,17 @@ end;
 
 
 
-procedure TTracks.WMEraseBkGnd(var Message:TMessage);
+procedure TTracks.WMEraseBkGnd(var Message: TMessage);
 begin
   Message.Result := 0;
+end;
+
+
+procedure TTracks.WMPaint(var Message: TWMPaint);
+begin
+  ControlState := ControlState + [csCustomPaint];
+  inherited;
+  ControlState := ControlState - [csCustomPaint];
 end;
 
 
@@ -4416,6 +4420,12 @@ begin
 	g := round(Ratio * g1 + (1 - Ratio) * g0);
 	b := round(Ratio * b1 + (1 - Ratio) * b0);
 	Result := RGB(r, g, b);
+end;
+
+
+procedure TTracks.PaintWindow(DC: HDC);
+begin
+  RedrawTracks(DC);
 end;
 
 
@@ -5174,7 +5184,7 @@ begin
   // Copy hidden image to the Tracks control
   if not ManualBitBlt then
   begin
-    BitBlt(DC1, 0, 0, Width, Height, fBitmap.Canvas.Handle, 0, 0, SRCCOPY);
+    BitBlt(DC1, 0, 0, ClientWidth, ClientHeight, fBitmap.Canvas.Handle, 0, 0, SRCCOPY);
   end;
   SelectObject(DC1, p);
   if DC = 0 then
@@ -5200,6 +5210,12 @@ begin
   RecreateCaret;
   SetCaretPosition;
   ShowMyCaret;
+end;
+
+
+procedure TTestLine.PaintWindow(DC: HDC);
+begin
+  RedrawTestLine(DC);
 end;
 
 
@@ -5378,6 +5394,12 @@ begin
     RedrawSamples(0);
     ShowMyCaret;
   end;
+end;
+
+
+procedure TSamples.PaintWindow(DC: HDC);
+begin
+  RedrawSamples(DC);
 end;
 
 
@@ -5856,7 +5878,7 @@ begin
   fBitmap.Canvas.FillRect(Rect(SepX, 0, SepX+2, Y));
 
   // Copy shadow bitmap
-  BitBlt(DC1, 0, 0, Width, Height, fBitmap.Canvas.Handle, 0, 0, SRCCOPY);
+  BitBlt(DC1, 0, 0, ClientWidth, ClientHeight, fBitmap.Canvas.Handle, 0, 0, SRCCOPY);
 
   SelectObject(DC1, p);
   if DC = 0 then
@@ -6006,6 +6028,11 @@ begin
     ShowMyCaret;
   end;
 
+end;
+
+procedure TOrnaments.PaintWindow(DC: HDC);
+begin
+  RedrawOrnaments(DC);
 end;
 
 procedure TOrnaments.RedrawOrnaments(DC: HDC);
@@ -6181,7 +6208,7 @@ begin
   end;
 
   // Copy shadow bitmap
-  BitBlt(DC1, 0, 0, Width, Height, fBitmap.Canvas.Handle, 0, 0, SRCCOPY);
+  BitBlt(DC1, 0, 0, ClientWidth, ClientHeight, fBitmap.Canvas.Handle, 0, 0, SRCCOPY);
 
   SelectObject(DC1, p);
   if DC = 0 then
