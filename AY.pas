@@ -1725,8 +1725,8 @@ begin
   CalcFiltKoefs;
   SetLength(Filt_XL, Filt_NKoefs + 1);
   SetLength(Filt_XR, Filt_NKoefs + 1);
-  FillChar(Filt_XL[0], (Filt_M + 1) * 4, 0);
-  FillChar(Filt_XR[0], (Filt_M + 1) * 4, 0);
+  FillChar(Filt_XL[0], (Filt_M + 1) * SizeOf(Integer), 0);
+  FillChar(Filt_XR[0], (Filt_M + 1) * SizeOf(Integer), 0);
   Filt_I := 0
 end;
 
@@ -2066,8 +2066,8 @@ begin
     CalcFiltKoefs;
     SetLength(Filt_XL, M + 1);
     SetLength(Filt_XR, M + 1);
-    FillChar(Filt_XL[0], (Filt_M + 1) * 4, 0);
-    FillChar(Filt_XR[0], (Filt_M + 1) * 4, 0);
+    FillChar(Filt_XL[0], (Filt_M + 1) * SizeOf(Integer), 0);
+    FillChar(Filt_XR[0], (Filt_M + 1) * SizeOf(Integer), 0);
     Filt_I := 0;
   end;
   if R then

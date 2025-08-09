@@ -530,8 +530,8 @@ begin
   Real_End_All := False;
   if (RenderEngine = 0) and IsFilt then
   begin
-    FillChar(Filt_XL[0], (Filt_M + 1) * 4, 0);
-    FillChar(Filt_XR[0], (Filt_M + 1) * 4, 0);
+    FillChar(Filt_XL[0], (Filt_M + 1) * SizeOf(Integer), 0);
+    FillChar(Filt_XR[0], (Filt_M + 1) * SizeOf(Integer), 0);
     Filt_I := 0;
   end;
   for i := NumberOfSoundChips downto 1 do

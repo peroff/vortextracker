@@ -2970,7 +2970,7 @@ begin
   i := StringToAnsiCharArr(VTM.Title, @PT3.PT3_Name[30], 32);
   j := 32 - i; if j <> 0 then FillChar(PT3.PT3_Name[30 + i], j, 32);
 
-  Move(ById, PT3.PT3_Name[62], 4);
+  Move(ById, PT3.PT3_Name[62], 4 * SizeOf(AnsiChar));
 
   i := StringToAnsiCharArr(VTM.Author, @PT3.PT3_Name[66], 32);
   FillChar(PT3.PT3_Name[66 + i], 32 - i + 1, 32);
