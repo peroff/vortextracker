@@ -318,7 +318,7 @@ type
   end;
 
   // FamiTracker Clipboard
-  TFamiTrackerBuffer = record
+  TFamiTrackerBuffer = packed record
     Channels: Integer;
     Rows: Integer;
     SelectStart: Integer;

@@ -18463,8 +18463,8 @@ begin
     end;
 
     MStream := TMemoryStream.Create;
-    MStream.Write(FamiClipboard,sizeof(FamiClipboard)-4);
-    MStream.Write(FamiClipboard.data[0],length(FamiClipboard.Data)*12);
+    MStream.Write(FamiClipboard, SizeOf(FamiClipboard) - SizeOf(FamiClipboard.Data));
+    MStream.Write(FamiClipboard.data[0], Length(FamiClipboard.Data) * SizeOf(TFamiRow));
 
     try
       // write data to the stream
