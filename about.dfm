@@ -4,7 +4,7 @@ object AboutBox: TAboutBox
   ActiveControl = OKButton
   BorderStyle = bsDialog
   Caption = 'About Vortex Tracker II'
-  ClientHeight = 460
+  ClientHeight = 472
   ClientWidth = 298
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -14,18 +14,25 @@ object AboutBox: TAboutBox
   Font.Style = []
   OldCreateOrder = True
   Position = poMainFormCenter
-  Scaled = False
   OnCreate = FormCreate
+  DesignSize = (
+    298
+    472)
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
     Left = 8
     Top = 8
     Width = 281
-    Height = 401
+    Height = 413
+    Anchors = [akLeft, akTop, akRight, akBottom]
     BevelOuter = bvLowered
     Color = clSilver
     TabOrder = 0
+    ExplicitHeight = 401
+    DesignSize = (
+      281
+      413)
     object ProgramIcon: TImage
       Left = 40
       Top = 8
@@ -376,13 +383,17 @@ object AboutBox: TAboutBox
         0101010101010101010101010101010101010101010101010101010101010101
         0101010101010101010101010101010101010101010101010101010101010101
         01010101010101010101010101010101010101010101}
+      Stretch = True
       IsControl = True
     end
     object ProductName: TLabel
-      Left = 98
+      Left = 8
       Top = 62
-      Width = 87
+      Width = 265
       Height = 15
+      Alignment = taCenter
+      Anchors = [akLeft, akTop, akRight]
+      AutoSize = False
       Caption = 'Vortex Tracker II'
       Font.Charset = RUSSIAN_CHARSET
       Font.Color = clBlack
@@ -393,11 +404,12 @@ object AboutBox: TAboutBox
       IsControl = True
     end
     object Version: TLabel
-      Left = 8
+      Left = 11
       Top = 80
-      Width = 265
+      Width = 262
       Height = 13
       Alignment = taCenter
+      Anchors = [akLeft, akTop, akRight]
       AutoSize = False
       Font.Charset = RUSSIAN_CHARSET
       Font.Color = clBlack
@@ -411,15 +423,17 @@ object AboutBox: TAboutBox
       Left = 8
       Top = 120
       Width = 265
-      Height = 273
+      Height = 285
+      Anchors = [akLeft, akTop, akRight, akBottom]
       BevelOuter = bvNone
       Enabled = False
       TabOrder = 2
+      ExplicitHeight = 273
       object Memo1: TMemo
         Left = 0
         Top = 0
         Width = 265
-        Height = 273
+        Height = 285
         Align = alClient
         BevelInner = bvNone
         BevelOuter = bvNone
@@ -455,6 +469,7 @@ object AboutBox: TAboutBox
         ParentFont = False
         ReadOnly = True
         TabOrder = 0
+        ExplicitHeight = 273
       end
     end
     object line1: TGroupBox
@@ -462,6 +477,7 @@ object AboutBox: TAboutBox
       Top = 110
       Width = 265
       Height = 1
+      Anchors = [akLeft, akTop, akRight]
       BiDiMode = bdLeftToRight
       Color = clGray
       Ctl3D = False
@@ -476,6 +492,7 @@ object AboutBox: TAboutBox
       Top = 374
       Width = 265
       Height = 1
+      Anchors = [akLeft, akTop, akRight]
       BiDiMode = bdLeftToRight
       Color = clGray
       Ctl3D = False
@@ -490,6 +507,7 @@ object AboutBox: TAboutBox
       Top = 256
       Width = 265
       Height = 1
+      Anchors = [akLeft, akTop, akRight]
       BiDiMode = bdLeftToRight
       Color = clGray
       Ctl3D = False
@@ -502,9 +520,10 @@ object AboutBox: TAboutBox
   end
   object OKButton: TButton
     Left = 8
-    Top = 418
+    Top = 430
     Width = 281
     Height = 33
+    Anchors = [akLeft, akRight, akBottom]
     Cancel = True
     Caption = 'OK'
     Default = True
@@ -517,5 +536,6 @@ object AboutBox: TAboutBox
     ParentFont = False
     TabOrder = 1
     IsControl = True
+    ExplicitTop = 418
   end
 end
