@@ -294,8 +294,12 @@ procedure THybrid_BSC_HSL_ColorPickerDlg.calculate_sizes;
                              (img.Height + img.Canvas.TextWidth(caption)) div 2,
                              caption
                             );
+      {$IFOPT C+} // if assertions are on
          old_font := SelectObject (img.Canvas.Handle, old_font);
          assert (old_font <> 0);
+      {$ELSE}
+         SelectObject (img.Canvas.Handle, old_font);
+      {$ENDIF}
          DeleteObject (vertical_font)
       end;
    begin
