@@ -962,10 +962,6 @@ object MDIChild: TMDIChild
     object SamplesSheet: TTabSheet
       Caption = 'Samples'
       ImageIndex = 31
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object SampleOpts: TGroupBox
         Left = 0
         Top = 504
@@ -1430,10 +1426,6 @@ object MDIChild: TMDIChild
     object OrnamentsSheet: TTabSheet
       Caption = 'Ornaments'
       ImageIndex = 30
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object SpeedButton21: TSpeedButton
         Left = 464
         Top = 440
@@ -1834,10 +1826,6 @@ object MDIChild: TMDIChild
     object OptTab: TTabSheet
       Caption = 'Options'
       ImageIndex = 21
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object TrackOptsScrollBox: TScrollBox
         Left = 0
         Top = 2
@@ -1969,7 +1957,7 @@ object MDIChild: TMDIChild
         end
         object ManualHz: TEdit
           Left = 363
-          Top = 266
+          Top = 268
           Width = 64
           Height = 20
           AutoSize = False
@@ -1994,10 +1982,6 @@ object MDIChild: TMDIChild
     object InfoTab: TTabSheet
       Caption = 'Info'
       ImageIndex = 43
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object TrackInfoGB: TGroupBox
         Left = 0
         Top = -2

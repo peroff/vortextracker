@@ -3359,8 +3359,8 @@ begin
     SaveHead.Left := VtmFeaturesGrp.Left + VtmFeaturesGrp.Left + VtmFeaturesGrp.Width + 9;
 
     SaveHead.Width := TrackOptsScrollBox.ClientWidth - SaveHead.Left - VScrollbarSize - 3;
-    ManualHz.Left := TrackChipFreq.Buttons[20].Left + 95;
-    ManualIntFreq.Left := TrackIntSel.Buttons[6].Left + 95;
+    ManualHz.Left := TrackChipFreq.Buttons[21].Left + Canvas.TextWidth(TrackChipFreq.Buttons[21].Caption) + 55;
+    ManualIntFreq.Left := TrackIntSel.Buttons[6].Left + Canvas.TextWidth(TrackIntSel.Buttons[6].Caption) + 55;
 
 
     // --- INFO TAB -------
@@ -22680,16 +22680,16 @@ begin
     TSWindow[0].ActivateSheet(PageControl1.ActivePageIndex);//TSWindow[0].PageControl1.ActivePageIndex := PageControl1.ActivePageIndex;
 
     if PageControl1.ActivePage = OptTab then begin
-      TSWindow[0].ManualHz.Left := TrackChipFreq.Buttons[20].Left + 95;
-      TSWindow[0].ManualIntFreq.Left := TrackIntSel.Buttons[6].Left + 95;
+      TSWindow[0].ManualHz.Left := TrackChipFreq.Buttons[21].Left + Canvas.TextWidth(TrackChipFreq.Buttons[21].Caption) + 55;
+      TSWindow[0].ManualIntFreq.Left := TrackIntSel.Buttons[6].Left + Canvas.TextWidth(TrackIntSel.Buttons[6].Caption) + 55;
     end;
     // change Tab in third turbotrack module
     if TSWindow[1] <> nil then begin
       TSWindow[1].ActivateSheet(PageControl1.ActivePageIndex);//TSWindow[1].PageControl1.ActivePageIndex := PageControl1.ActivePageIndex;
 
       if PageControl1.ActivePage = OptTab then begin
-        TSWindow[1].ManualHz.Left := TrackChipFreq.Buttons[20].Left + 95; //!!!
-        TSWindow[1].ManualIntFreq.Left := TrackIntSel.Buttons[6].Left + 95;
+        TSWindow[1].ManualHz.Left := TrackChipFreq.Buttons[21].Left + Canvas.TextWidth(TrackChipFreq.Buttons[21].Caption) + 55; //!!!
+        TSWindow[1].ManualIntFreq.Left := TrackIntSel.Buttons[6].Left + Canvas.TextWidth(TrackIntSel.Buttons[6].Caption) + 55;
       end;
     end;
   end;
@@ -22721,8 +22721,8 @@ begin
   end;
 
   if PageControl1.ActivePage = OptTab then begin
-    ManualHz.Left := TrackChipFreq.Buttons[20].Left + 95;
-    ManualIntFreq.Left := TrackIntSel.Buttons[6].Left + 95;
+    ManualHz.Left := TrackChipFreq.Buttons[21].Left + Canvas.TextWidth(TrackChipFreq.Buttons[21].Caption) + 55;
+    ManualIntFreq.Left := TrackIntSel.Buttons[6].Left + Canvas.TextWidth(TrackIntSel.Buttons[6].Caption) + 55;
   end;
 
   if (PageControl1.ActivePage = InfoTab) and (TrackInfo.CanFocus) then

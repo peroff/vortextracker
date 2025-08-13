@@ -570,8 +570,8 @@ begin
     ClicksCounter1 := 0;
     with TMDIChild(MainForm.ActiveMDIChild) do begin
       PageControl1.ActivePageIndex := 3;
-      ManualHz.Left := TrackChipFreq.Buttons[20].Left + 95;
-      ManualIntFreq.Left := TrackIntSel.Buttons[6].Left + 95;
+      ManualHz.Left := TrackChipFreq.Buttons[21].Left + Canvas.TextWidth(TrackChipFreq.Buttons[21].Caption) + 55;
+      ManualIntFreq.Left := TrackIntSel.Buttons[6].Left + Canvas.TextWidth(TrackIntSel.Buttons[6].Caption) + 55;
       HelpShape1.Left := TrackIntSel.Left - 4;
       HelpShape1.Top := TrackIntSel.Top - 4;
       HelpShape1.Width := TrackIntSel.Left + TrackIntSel.Width;
@@ -730,8 +730,8 @@ begin
     ClicksCounter := 0;
     with TMDIChild(MainForm.ActiveMDIChild) do begin
       PageControl1.ActivePageIndex := 3;
-      ManualHz.Left := TrackChipFreq.Buttons[20].Left + 95;
-      ManualIntFreq.Left := TrackIntSel.Buttons[6].Left + 95;
+      ManualHz.Left := TrackChipFreq.Buttons[21].Left + Canvas.TextWidth(TrackChipFreq.Buttons[21].Caption) + 55;
+      ManualIntFreq.Left := TrackIntSel.Buttons[6].Left + Canvas.TextWidth(TrackIntSel.Buttons[6].Caption) + 55;
       HelpShape1.Left := TrackChipFreq.Left - 4;
       HelpShape1.Top := TrackChipFreq.Top - 4;
       HelpShape1.Width := TrackChipFreq.Left + TrackChipFreq.Width;
