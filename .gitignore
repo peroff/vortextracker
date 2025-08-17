@@ -29,8 +29,6 @@ __recovery/
 *.otares
 
 # Project specific
-buildname.txt
-buildts.inc
 VT.res
 Delphi-Midi-Component/Package/MidiComponents2010.res
 
