@@ -4,7 +4,7 @@ object AboutBox: TAboutBox
   ActiveControl = OKButton
   BorderStyle = bsDialog
   Caption = 'About Vortex Tracker II'
-  ClientHeight = 472
+  ClientHeight = 495
   ClientWidth = 298
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -17,22 +17,22 @@ object AboutBox: TAboutBox
   OnCreate = FormCreate
   DesignSize = (
     298
-    472)
+    495)
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
     Left = 8
     Top = 8
     Width = 281
-    Height = 413
+    Height = 436
     Anchors = [akLeft, akTop, akRight, akBottom]
     BevelOuter = bvLowered
     Color = clSilver
     TabOrder = 0
-    ExplicitHeight = 401
+    ExplicitHeight = 413
     DesignSize = (
       281
-      413)
+      436)
     object ProgramIcon: TImage
       Left = 40
       Top = 8
@@ -423,17 +423,17 @@ object AboutBox: TAboutBox
       Left = 8
       Top = 120
       Width = 265
-      Height = 285
+      Height = 308
       Anchors = [akLeft, akTop, akRight, akBottom]
       BevelOuter = bvNone
       Enabled = False
       TabOrder = 2
-      ExplicitHeight = 273
+      ExplicitHeight = 285
       object Memo1: TMemo
         Left = 0
         Top = 0
         Width = 265
-        Height = 285
+        Height = 308
         Align = alClient
         BevelInner = bvNone
         BevelOuter = bvNone
@@ -464,12 +464,14 @@ object AboutBox: TAboutBox
           'Version 1.5 - 2.6'
           '(c) Dexus (Volutar) 2022-2023'
           'Version 2.6.1'
+          '(c) Dan Peroff (WladAsm) 2025'
+          'Migration to modern Delphi, x64 version, fixes'
           ''
           'Date of build: %datetime%')
         ParentFont = False
         ReadOnly = True
         TabOrder = 0
-        ExplicitHeight = 273
+        ExplicitHeight = 285
       end
     end
     object line1: TGroupBox
@@ -489,7 +491,7 @@ object AboutBox: TAboutBox
     end
     object line2: TGroupBox
       Left = 8
-      Top = 374
+      Top = 403
       Width = 265
       Height = 1
       Anchors = [akLeft, akTop, akRight]
@@ -520,7 +522,7 @@ object AboutBox: TAboutBox
   end
   object OKButton: TButton
     Left = 8
-    Top = 430
+    Top = 453
     Width = 281
     Height = 33
     Anchors = [akLeft, akRight, akBottom]
@@ -536,6 +538,6 @@ object AboutBox: TAboutBox
     ParentFont = False
     TabOrder = 1
     IsControl = True
-    ExplicitTop = 418
+    ExplicitTop = 430
   end
 end
