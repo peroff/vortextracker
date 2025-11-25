@@ -38,6 +38,7 @@ const
   VersionString = '2.6.1';
   IsBeta = '';
   BetaNumber = '';
+  BuildArch = {$IFDEF WIN64} ' (64-bit)' {$ELSE} '' {$ENDIF};
 
   VersionFullString = VersionString + IsBeta + BetaNumber;
 
@@ -2218,7 +2219,7 @@ begin
 
 
   Application.OnException := AppException;
-  Caption := AppName +' '+ VersionString;
+  Caption := AppName +' '+ VersionString + BuildArch;
 
   BM := TBitmap.Create;
   BM.Canvas.Font := StatusBar.Font;

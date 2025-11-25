@@ -2479,7 +2479,7 @@ begin
     MainForm.RestoreControls;
   end;
   //MainForm.DeleteWindowListItem(Self);
-  MainForm.Caption := AppName +' '+ VersionString;
+  MainForm.Caption := AppName +' '+ VersionString + BuildArch;
   //?
   //VTMP := nil;
   Action := caFree;
@@ -12879,7 +12879,7 @@ begin
     MainForm.RestoreControls;
   end;
   MainForm.DeleteWindowListItem(Self);
-  MainForm.Caption := AppName +' '+ VersionString;
+  MainForm.Caption := AppName +' '+ VersionString + BuildArch;
 
   TrackInfoForm.Hide;
 

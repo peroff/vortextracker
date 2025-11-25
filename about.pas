@@ -51,7 +51,7 @@ procedure TAboutBox.FormCreate(Sender: TObject);
 var
   i: integer;
 begin
-  Version.Caption := HalfVersString;
+  Version.Caption := HalfVersString + BuildArch;
   for i := 0 to Memo1.Lines.Count-1 do begin
     Memo1.Lines[i] := StringReplace(Memo1.Lines[i], '%datetime%', buildts, []);
   end;
