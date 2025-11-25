@@ -10,7 +10,7 @@ Ivan Pirog (Flexx/Enhancers), ivan.pirog@gmail.com
 }
 
 {.$DEFINE NOREDRAW}
-{.$DEFINE DEBUG}
+{.$DEFINE MYDEBUG}
 {.$DEFINE LOGGER}
 
 unit Main;
@@ -7340,12 +7340,12 @@ begin
 
   StatusBar.Panels[0].Width := ClientWidth - StatusBar.Panels[1].Width - StatusBar.Panels[2].Width - 8;
 
-  {$IFDEF DEBUG}
+  {$IFDEF MYDEBUG}
  { StatusBar.Panels[0].Text := Format(
     'Maximize: %d, Restore: %d, Snap: %d, Unsnap: %d, Resize: %d, OneChRes: %d',
     [Ord(Maximize), Ord(Restore), Ord(WindowSnap), Ord(WindowUnsnap), Ord(Resize), Ord(ResizeOneChild)]
   );  }
-  {$ENDIF DEBUG}
+  {$ENDIF MYDEBUG}
 
   ResizeActionBlocked := False;
   WindowSnap := False;

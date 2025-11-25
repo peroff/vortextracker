@@ -10,7 +10,7 @@ Ivan Pirog (Flexx/Enhancers), ivan.pirog@gmail.com
 https://github.com/ivanpirog/vortextracker
 }
 
-{.$DEFINE DEBUG}
+{.$DEFINE MYDEBUG}
 
 unit Childwin;
 
@@ -3857,7 +3857,7 @@ procedure TSamples.DoHint(X, Y: Integer);
 var
   s: string;
 begin
-  {$IFDEF DEBUG}Exit;{$ENDIF}
+  {$IFDEF MYDEBUG}Exit;{$ENDIF}
   Application.HintHidePause := HideHintDelay;
 
 
@@ -6220,7 +6220,7 @@ end;
 procedure TOrnaments.DoHint;
 var s: string;
 begin
-  {$IFDEF DEBUG}Exit;{$ENDIF}
+  {$IFDEF MYDEBUG}Exit;{$ENDIF}
   Application.HintHidePause := 9300;
   if CursorX in [0, 9, 18, 27] then
   begin
@@ -6293,7 +6293,7 @@ procedure TTracks.DoHint;
 var
   s: string;
 begin
-  {$IFDEF DEBUG}Exit;{$ENDIF}
+  {$IFDEF MYDEBUG}Exit;{$ENDIF}
 (*  if IsSelected then begin
     ShowHint := False;
     Exit;
