@@ -36,8 +36,8 @@ const
 
   AppName = 'Vortex Tracker';
   VersionString = '2.6.1';
-  IsBeta = '';
-  BetaNumber = '';
+  IsBeta = ' dev';
+  BetaNumber = ' x64';
   BuildArch = {$IFDEF WIN64} ' (64-bit)' {$ELSE} '' {$ENDIF};
 
   VersionFullString = VersionString + IsBeta + BetaNumber;
