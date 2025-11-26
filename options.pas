@@ -512,7 +512,8 @@ begin
   heady:=Form1.Height-Form1.ClientHeight;
   headx:=Form1.Width-Form1.ClientWidth;
   Form1.Constraints.MaxHeight := Form1.Button2.Top+Form1.Button2.Height
-                                  +round(heady*0.4+hscrollbarsize*1.25);
+                                  + heady + Form1.Button2.Top - (Form1.OpsPages.Top + Form1.OpsPages.Height);
+                                  //+round(heady*0.4+hscrollbarsize*1.25);
   w11w:=Form1.Button2.Left+Form1.Button2.Width;
   Form1.Constraints.MaxWidth:=w11w+round(headx*0.9+vscrollbarsize*1.1);
   Form1.Height:=Constraints.MaxHeight;

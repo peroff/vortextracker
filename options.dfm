@@ -5,7 +5,7 @@ object Form1: TForm1
   VertScrollBar.Tracking = True
   BorderIcons = [biSystemMenu]
   Caption = 'Options'
-  ClientHeight = 575
+  ClientHeight = 582
   ClientWidth = 534
   Color = clBtnFace
   Constraints.MinHeight = 380
@@ -40,10 +40,6 @@ object Form1: TForm1
     object CurWinds: TTabSheet
       Caption = 'Main'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object PatEditorOpts: TGroupBox
         Left = 0
         Top = 8
@@ -1711,10 +1707,6 @@ object Form1: TForm1
     object WOAPITAB: TTabSheet
       Caption = 'Audio'
       ImageIndex = 4
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object SpeedButton1: TSpeedButton
         Left = 464
         Top = 376
