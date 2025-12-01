@@ -3738,6 +3738,7 @@ end;
 destructor TOrnaments.Destroy;
 begin
   fBitmap.Free;
+  fBitmapThumb.Free;
   inherited;
 end;
 
