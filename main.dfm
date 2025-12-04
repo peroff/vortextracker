@@ -58,6 +58,7 @@ object MainForm: TMainForm
     ButtonWidth = 24
     Color = clBtnFace
     EdgeBorders = [ebTop, ebBottom]
+    Flat = False
     Images = ImageList1
     ParentColor = False
     ParentShowHint = False
