@@ -13136,9 +13136,17 @@ begin
       end;
     end;
 
-    if iter=1 then VTMP := VTMP2
+    if iter=1 then
+    begin
+      FreeVTMP(VTMP);
+      VTMP := VTMP2;
+    end
     else
-    if iter=2 then VTMP := VTMP3;
+      if iter=2 then
+      begin
+        FreeVTMP(VTMP);
+        VTMP := VTMP3;
+      end;
 
     if LowerCase(ExtractFileExt(Name)) = '.pt3' then
       SavedAsText := False;
