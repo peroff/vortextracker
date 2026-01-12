@@ -15,7 +15,7 @@ type
     Opened: Boolean;
     LogFile: TextFile;
     constructor Create(FileName: String);
-    destructor Destruct;
+    destructor Destroy; override;
     procedure Add(Str: String);
   end;
 
@@ -29,9 +29,10 @@ begin
   Opened := True;
 end;
 
-destructor TLogger.Destruct;
+destructor TLogger.Destroy;
 begin
   CloseFile(LogFile);
+  inherited;
 end;
 
 procedure TLogger.Add(Str: String);
