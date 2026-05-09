@@ -60,7 +60,7 @@ begin
     {$ENDIF}
   {$IFEND}
   {$IF CompilerVersion >= 18.5}  // Delphi 2007 or above
-  Application.MainFormOnTaskbar := True;
+  Application.MainFormOnTaskbar := False;
   {$IFEND}
   Application.Title := 'Vortex Tracker';
   Application.CreateForm(TMainForm, MainForm);
