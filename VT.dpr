@@ -54,6 +54,11 @@ uses
 
 begin
   Application.Initialize;
+  {$IF CompilerVersion >= 18.0}  // Delphi 2006 or above
+    {$IFDEF DEBUG}
+    ReportMemoryLeaksOnShutdown := True;
+    {$ENDIF}
+  {$IFEND}
   {$IF CompilerVersion >= 18.5}  // Delphi 2007 or above
   Application.MainFormOnTaskbar := True;
   {$IFEND}
