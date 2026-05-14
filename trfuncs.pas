@@ -1462,10 +1462,10 @@ var
 begin
   Result := False;
   res := 0;
+  s := UpperCase(s);
   for i := 1 to Length(s) do
   begin
     if s[i] = '.' then s[i] := '0';
-    s := UpperCase(s);
     case s[i] of
       '0'..'9': res := res * 16 + Ord(s[i]) - Ord('0');
       'A'..'V': res := res * 16 + Ord(s[i]) - Ord('A') + 10
