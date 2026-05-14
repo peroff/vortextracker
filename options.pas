@@ -1939,20 +1939,24 @@ begin
       St := Trim(St);
       if Trim(St) = '' then Continue;
       vals := Split(',',St);
-      for i := 0 to vals.count-1 do
-        begin
-         vl:=trim(vals[i]);
-         if trystrtoint(vl,rs) then
+      try
+        for i := 0 to vals.count-1 do
           begin
-           CustomNoteTable[j]:=rs;
-           inc(j);
-           if j=96 then
+           vl:=trim(vals[i]);
+           if trystrtoint(vl,rs) then
             begin
-             enough:=true;
-             break;
+             CustomNoteTable[j]:=rs;
+             inc(j);
+             if j=96 then
+              begin
+               enough:=true;
+               break;
+              end;
             end;
           end;
-        end;
+      finally
+        FreeAndNil(vals);
+      end;
       if enough then break;
      end;
     CloseFile(TxtFile);

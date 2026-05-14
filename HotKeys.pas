@@ -274,14 +274,16 @@ var
   cc: Integer;
 begin
   HotKeysList := Split(',', HotKeysText);
-
-  cc:=HotKeysList.Count-1;
-  if High(VTHotKeys) <> cc then exit; //wrong number of hotkeys
-  for I := 0 to cc do
-  begin
-    AssignHotKey(I, HotKeysList[I]);
+  try
+    cc:=HotKeysList.Count-1;
+    if High(VTHotKeys) <> cc then exit; //wrong number of hotkeys
+    for I := 0 to cc do
+    begin
+      AssignHotKey(I, HotKeysList[I]);
+    end;
+  finally
+    FreeAndNil(HotKeysList);
   end;
-  FreeAndNil(HotKeysList);
 end;
 
 
