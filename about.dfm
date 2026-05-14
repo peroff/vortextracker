@@ -464,7 +464,7 @@ object AboutBox: TAboutBox
           'Version 1.5 - 2.6'
           '(c) Dexus (Volutar) 2022-2025'
           'Version 2.6.1'
-          '(c) Dan Peroff (WladAsm) 2025'
+          '(c) Dan Peroff (WladAsm) 2025-2026'
           'Migration to modern Delphi, x64 version, fixes'
           ''
           'Date of build: %datetime%')

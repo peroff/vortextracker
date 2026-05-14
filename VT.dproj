@@ -119,13 +119,14 @@
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=;FileDescription=Vortex Tracker chip music editor;FileVersion=2.6.1.1260;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=Vortex Tracker II;ProductVersion=2.6;Comments=Goal: DreamTracker;ProgramID=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileDescription=Vortex Tracker chip music editor;FileVersion=2.6.1.1264;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=Vortex Tracker II;ProductVersion=2.6;Comments=Goal: DreamTracker;ProgramID=</VerInfo_Keys>
+        <VerInfo_Build>1264</VerInfo_Build>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=;FileDescription=Vortex Tracker chip music editor;FileVersion=2.6.1.1264;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=;ProductName=Vortex Tracker II;ProductVersion=2.6;Comments=Goal: DreamTracker</VerInfo_Keys>
-        <VerInfo_Build>1264</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=;FileDescription=Vortex Tracker chip music editor;FileVersion=2.6.1.1267;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=;ProductName=Vortex Tracker II;ProductVersion=2.6;Comments=Goal: DreamTracker</VerInfo_Keys>
+        <VerInfo_Build>1267</VerInfo_Build>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
