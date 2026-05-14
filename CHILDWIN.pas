@@ -19634,131 +19634,135 @@ begin
     hglb := GetClipboardData(CF_TEXT);
     if hglb = 0 then Exit;
     lps := GlobalLock(hglb);
-    s := Trim(String(lps));
-    GlobalUnlock(hglb);
+    try
+      s := Trim(String(lps));
+
+      // Check buffer format
+      re := TRegExpr.Create;
+      try
+        re.ModifierI := True;
+        re.ModifierS := True;
+        re.ModifierM := True;
+
+        re.Expression := '^ModPlug Tracker';
+        if re.Exec(s) then begin
+          TMDIChild(ParentWin).PasteModPlugPattern(s);
+          Exit;
+        end;
+
+        re.Expression := '^org.tildearrow.furnace - Pattern Data';
+        if re.Exec(s) then begin
+          TMDIChild(ParentWin).PasteFurnacePattern(s);
+          Exit;
+        end;
+
+        re.Expression := '^<\?xml version="1\.0" encoding="UTF-8"\?>\s+<PatternClipboard';
+        if re.Exec(s) then begin
+          TMDIChild(ParentWin).PasteRenoisePattern(s);
+          Exit;
+        end;
+      finally
+        FreeAndNil(re);
+      end;
+
+      sz := AnsiStrings.StrLen(lps);
+      if not GetStr(lps, s) then
+        exit;
+      if (s + #13#10) <> ClipHdrPat then
+        exit;
+      NativeInt(ps) := NativeInt(lps) + Length(s) + 2;
+      FillChar(nums, SizeOf(nums), 255);
+      l := 0;
+      while (NativeInt(ps) + 2 - NativeInt(lps) < sz) and (l < MaxPatLen) do
+      begin
+        if not GetStr(ps, s) then
+          exit;
+
+    //    if DecBaseLinesOn then
+    //      s := copy(s, 2, Length(s));
+
+        inc(NativeInt(ps), Length(s) + 2);
+        if Length(s) <> 49 then
+          exit;
+        for j := 0 to 3 do
+          if s[j + 1] <> #32 then
+          begin
+            if not SGetNumber(s[j + 1], 15, i) then
+              exit;
+            nums[l, j] := i
+          end;
+        if s[6] <> #32 then
+        begin
+          if DecBaseNoiseOn then
+          begin
+            if not SGetDecNumber(s[6], 3, i) then
+              exit
+          end
+          else if not SGetNumber(s[6], 1, i) then
+            exit;
+          //if not SGetNumber(s[6], 1, i) then
+          //  exit;
+          nums[l, 4] := i
+        end;
+        if s[7] <> #32 then
+        begin
+          if DecBaseNoiseOn then
+          begin
+            if not SGetDecNumber(s[7], 9, i) then
+              exit
+          end
+          else if not SGetNumber(s[7], 15, i) then
+            exit;
+          nums[l, 5] := i
+        end;
+        for k := 0 to 2 do
+        begin
+          if s[9 + k * 14] <> #32 then
+          begin
+            if not SGetNote(Copy(s, 9 + k * 14, 3), i) then
+              exit;
+            nums[l, 6 + k * 9] := i + 256
+          end;
+          if s[13 + k * 14] <> #32 then
+          begin
+            if not SGetNumber(s[13 + k * 14], 31, i) then
+              exit;
+            nums[l, 7 + k * 9] := i
+          end;
+          if s[14 + k * 14] <> #32 then
+          begin
+            if not SGetNumber(s[14 + k * 14], 15, i) then
+              exit;
+            nums[l, 8 + k * 9] := i
+          end;
+          if s[15 + k * 14] <> #32 then
+          begin
+            if not SGetNumber(s[15 + k * 14], 31, i) then
+              exit;
+            nums[l, 9 + k * 9] := i
+          end;
+          if s[16 + k * 14] <> #32 then
+          begin
+            if not SGetNumber(s[16 + k * 14], 15, i) then
+              exit;
+            nums[l, 10 + k * 9] := i
+          end;
+          for j := 0 to 3 do
+            if s[18 + k * 14 + j] <> #32 then
+            begin
+              if not SGetNumber(s[18 + k * 14 + j], 15, i) then
+                exit;
+              nums[l, 11 + k * 9 + j] := i
+            end
+        end;
+        inc(l);
+      end;
+
+    finally
+      GlobalUnlock(hglb);
+    end;
   finally
     CloseClipboard;
-  end;
-
-  // Check buffer format
-  re := TRegExpr.Create;
-  re.ModifierI := True;
-  re.ModifierS := True;
-  re.ModifierM := True;
-
-  re.Expression := '^ModPlug Tracker';
-  if re.Exec(s) then begin
-    re.Free;
-    TMDIChild(ParentWin).PasteModPlugPattern(s);
-    Exit;
-  end;
-
-  re.Expression := '^org.tildearrow.furnace - Pattern Data';
-  if re.Exec(s) then begin
-    re.Free;
-    TMDIChild(ParentWin).PasteFurnacePattern(s);
-    Exit;
-  end;
-
-  re.Expression := '^<\?xml version="1\.0" encoding="UTF-8"\?>\s+<PatternClipboard';
-  if re.Exec(s) then begin
-    re.Free;
-    TMDIChild(ParentWin).PasteRenoisePattern(s);
-    Exit;
-  end;
-
-  re.Free;
-  sz := AnsiStrings.StrLen(lps);
-  if not GetStr(lps, s) then
-    exit;
-  if (s + #13#10) <> ClipHdrPat then
-    exit;
-  NativeInt(ps) := NativeInt(lps) + Length(s) + 2;
-  FillChar(nums, SizeOf(nums), 255);
-  l := 0;
-  while (NativeInt(ps) + 2 - NativeInt(lps) < sz) and (l < MaxPatLen) do
-  begin
-    if not GetStr(ps, s) then
-      exit;
-
-//    if DecBaseLinesOn then
-//      s := copy(s, 2, Length(s));
-
-    inc(NativeInt(ps), Length(s) + 2);
-    if Length(s) <> 49 then
-      exit;
-    for j := 0 to 3 do
-      if s[j + 1] <> #32 then
-      begin
-        if not SGetNumber(s[j + 1], 15, i) then
-          exit;
-        nums[l, j] := i
-      end;
-    if s[6] <> #32 then
-    begin
-      if DecBaseNoiseOn then
-      begin
-        if not SGetDecNumber(s[6], 3, i) then
-          exit
-      end
-      else if not SGetNumber(s[6], 1, i) then
-        exit;
-      //if not SGetNumber(s[6], 1, i) then
-      //  exit;
-      nums[l, 4] := i
-    end;
-    if s[7] <> #32 then
-    begin
-      if DecBaseNoiseOn then
-      begin
-        if not SGetDecNumber(s[7], 9, i) then
-          exit
-      end
-      else if not SGetNumber(s[7], 15, i) then
-        exit;
-      nums[l, 5] := i
-    end;
-    for k := 0 to 2 do
-    begin
-      if s[9 + k * 14] <> #32 then
-      begin
-        if not SGetNote(Copy(s, 9 + k * 14, 3), i) then
-          exit;
-        nums[l, 6 + k * 9] := i + 256
-      end;
-      if s[13 + k * 14] <> #32 then
-      begin
-        if not SGetNumber(s[13 + k * 14], 31, i) then
-          exit;
-        nums[l, 7 + k * 9] := i
-      end;
-      if s[14 + k * 14] <> #32 then
-      begin
-        if not SGetNumber(s[14 + k * 14], 15, i) then
-          exit;
-        nums[l, 8 + k * 9] := i
-      end;
-      if s[15 + k * 14] <> #32 then
-      begin
-        if not SGetNumber(s[15 + k * 14], 31, i) then
-          exit;
-        nums[l, 9 + k * 9] := i
-      end;
-      if s[16 + k * 14] <> #32 then
-      begin
-        if not SGetNumber(s[16 + k * 14], 15, i) then
-          exit;
-        nums[l, 10 + k * 9] := i
-      end;
-      for j := 0 to 3 do
-        if s[18 + k * 14 + j] <> #32 then
-        begin
-          if not SGetNumber(s[18 + k * 14 + j], 15, i) then
-            exit;
-          nums[l, 11 + k * 9 + j] := i
-        end
-    end;
-    inc(l);
   end;
 
   if l = 0 then
