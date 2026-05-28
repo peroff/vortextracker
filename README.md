@@ -4,14 +4,9 @@
 
 _The best music tracker for 8-bit AY/YM chips._
 
-___
+This fork (the [modern](https://github.com/wladasm/vortextracker/tree/modern) branch) ports VortexTracker to a modern version of Delphi and adds support for building 64-bit binaries.
 
-> [!CAUTION]
-> This version of the program is experimental and may contain bugs, including issues that can lead to incorrect loading and/or saving of files. It is not recommended to use it for working with important data. Always make sure to keep proper backups.
-
-___
-
-This fork (the [modern](https://github.com/wladasm/vortextracker/tree/modern) branch) is an attempt to port VortexTracker to a modern version of Delphi and to enable building 64-bit binaries.
+In addition, several memory leaks from the original Vortex have been fixed, along with a number of other minor improvements.
 
 At the moment, the project builds without issues (0 warnings, 0 hints) in Delphi 10.3 for both target platforms — Win32 and Win64. It is expected to build in newer Delphi versions as well (possibly with minor adjustments), but this has not been tested.
 
@@ -41,5 +36,5 @@ https://volutar.myds.me/vortextracker
 
 ***
 
-**New experimental 32-bit and 64-bit builds by WladAsm**:  
+**New 32-bit and 64-bit builds by WladAsm**:  
 https://github.com/wladasm/vortextracker/releases
